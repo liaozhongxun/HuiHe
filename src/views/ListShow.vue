@@ -1,0 +1,196 @@
+<template>
+  <div class="ListShow">
+    <div class="S_Search">
+      <div class="S_cen">
+        <div class="left">
+          <input v-model="interinfo" ref="SearObj" id='L_SearObj' type="text" name="" placeholder="请输入设备信息" />
+        </div>
+        <button class="right p_center btn btn-default" @click='getDevBy()'>搜索</button>
+      </div>
+    </div>
+<!--     <ul ref="S_list" class="S_list">
+      <li @click='Lookup(item)' v-for="item in Search_list_li">{{item.name}}</li>
+    </ul> -->
+    <div class="List_Device">
+      <ul class="List_Device_ul clearfix" v-infinite-scroll="loadMore" infinite-scroll-disabled="loading" infinite-scroll-distance="3">
+        <li class="list" v-for="item in DevByList" @click='handleGoto("/DeviceDetInfo",{ucode:item.ucode})'>
+          <div class="font">
+            <div class="de_name" :title='item.name'>
+              <span class="key">名称 ：</span>
+              <span class="value">{{item.name}}</span>
+            </div>
+            <div class="de_rname" :title='item.rname'>
+              <span class="key">地点 ： </span>
+              <span class="value">{{item.rname}}</span>
+            </div>
+            <div class="de_ucode" :title='item.ucode'>
+              <span class="key">编号 ： </span>
+              <span class="value">{{item.ucode}}</span>
+            </div>
+            <div class="de_connstate">
+              <span class="key">状态 ： </span>
+              <span style='color:#5EEA62' v-show='item.connstate=="在线"' class="value">{{item.connstate}}</span>
+              <span style='color:#858585' v-show='item.connstate=="离线"' class="value">{{item.connstate}}</span>
+              <span style='color:#E83352' v-show='item.connstate=="警告"' class="value">{{item.connstate}}</span>
+              <span style='color:#EAA25C' v-show='item.connstate=="异常"' class="value">{{item.connstate}}</span>
+            </div>
+            <div>{{item.style}}</div>
+          </div>
+        </li>
+        <li class="more" @click='lookMore()' v-show='ismore'>查看更多 >></li>
+      </ul>
+    </div>
+  </div>
+</template>
+
+<script>
+import { InfiniteScroll } from 'mint-ui';
+import {
+  mapState,
+  mapActions,
+  mapMutations
+} from 'vuex';
+
+export default {
+  name: 'App',
+  data() {
+    return {
+      ismore: false,
+      list: [2],
+      DevByList:[],
+      interinfo:'',
+      Search_list_li:[],
+      pageIndex:2,
+    }
+  },
+  methods: {
+    ...mapActions({
+      Ser_DevBy: 'SER_DEVBY'
+    }),
+    loadMore() {
+      this.loading = true;
+      setTimeout(() => {
+        let last = this.list[this.list.length - 1];
+        for (let i = 1; i <= 3; i++) {
+          this.list.push(last + i);
+        }
+        this.loading = false;
+      }, 2500);
+    },
+    handleGoto(type,query) {
+      let Query= query||'';
+      this.$router.push({
+        path: type,
+        query:Query
+      });
+    },
+    lookMore(){
+        let _this = this;
+
+        this.Ser_DevBy([{'name':'','pageSize':20,'pageNumber':_this.pageIndex},function(res){
+        _this.DevByList = _this.DevByList.concat(res.data.result.list) 
+             _this.pageIndex++;
+
+       }])
+    },
+    getDevBy(opts){
+       let _this = this;
+       let Opts = '';
+       _this.pageIndex = 2
+       if(opts){
+           Opts = opts;
+           this.ismore = true;
+       }else{
+           if(_this.interinfo == ''){
+             Opts = {'name':'','pageSize':20,'pageNumber':1};
+             this.ismore = true;
+           }else{
+             Opts = {'name':_this.interinfo};
+             this.ismore = false;
+           }
+       }
+       this.Ser_DevBy([Opts,function(res){
+             _this.ismore = false;
+             _this.DevByList = res.data.result.list;
+       }])
+    }
+  },
+  mounted() {
+    this.getDevBy({'name':'','pageSize':20,'pageNumber':1});
+  },
+}
+
+</script>
+<style lang='scss' scoped>
+.ListShow {
+  width: 100%;
+  height: 100%;
+  background: #eee;
+
+  .S_Search {
+    background: #fff;
+  }
+
+  .List_Device {
+    width: 100%;
+    padding-top: 50px;
+    padding-bottom: 50px;
+    height: 100%;
+    overflow: auto;
+
+    .List_Device_ul {
+      background: #eee;
+      padding:8px;
+      padding-top: 6px;
+      padding-bottom: 0;
+      margin-bottom: 0;
+
+      .list {
+        width: 49%;
+        background: #fff;
+        padding: 8px;
+        margin-bottom: 5px;
+        border-radius: 3px;
+        // border: 1px solid #d7d7d7;
+        box-shadow: 0 0 10px 1px rgba(7,17,27,.1);
+        &:nth-child(odd){
+          float: left;
+        }
+        &:nth-child(even){
+          float: right;
+        }
+        div{
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space:nowrap;
+          cursor: pointer;
+        }
+        .de_name{
+          font-size: 15px;
+          color:#000;
+          // font-weight: bold;
+          margin-bottom: 2px;
+        }
+      }
+      .more{
+        width: 100%;
+        height: 30px;
+        background: #67c737;
+        opacity: 0.7;
+        margin-bottom: 5px;
+        color:#eee;
+        border-radius: 3px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .load {
+        width: 100;
+        height: 25px;
+      }
+    }
+  }
+}
+
+</style>

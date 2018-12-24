@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title></title>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no"> 
+    <!-- 引入饿了么ui ico样式 -->
+<!--     <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css"> -->
+    <script type="text/javascript" src="https://webapi.amap.com/maps?v=1.4.10&key=6dccd5b51cd165c2e13352b8d2bd38c2"></script>
+    <!--版本号与文档有变化-->
+    <link rel="shortcut icon" type="image/x-icon" href="./static/images/favicon.ico" />
+    <script type="text/javascript" src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<!--     <script type="text/javascript" src="./static/js/jquery.qrcode.min.js"></script>
+    <script type="text/javascript" src="./static/js/qrcode.js"></script> -->
+  </head>
+  <body>
+    <div id="app"></div>
+    <script>
+        var wms = '';
+        console.log(location.origin);
+        if(location.origin == 'http://localhost:8080'){
+           wms = 'http://tongbai.huihezn.com';
+        }else{
+           wms = location.origin;
+        }
+        window.applicationConfig = {
+           // WxPath:location.origin+'/#/', 
+           securityServer:'http://api.huihezn.com/securityApi',
+           currencyServer:'http://api.huihezn.com/currencyApi',
+           businessServer:'http://api.huihezn.com/businessApi',
+           wechatMpServer:wms +'/wxmp',
+           fileApi:'http://api.huihezn.com/fileApi'
+        }
+    </script>
+  </body>
+</html>

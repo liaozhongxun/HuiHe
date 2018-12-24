@@ -1,0 +1,346 @@
+#app > div{
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+}
+.p_center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.clearfix:before,
+.clearfix:after { display: table; content: " ";}
+
+.clearfix:after { clear: both;}
+/*设备展示搜索框*/
+.S_Search {
+  width: 100%;
+  height: 50px;
+  padding:3px;
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  z-index: 999;
+  background: #fff;
+  border-bottom: 1px solid #d7d7d7;
+  box-shadow: 0 0 10px 1px rgba(7,17,27,.1);
+}
+
+.S_Search .S_cen {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  border: 1px solid #b9c99f;
+  border-radius: 4px;
+}
+
+.S_Search .S_cen .right {
+  width: 50px;
+  border: none;
+  background: #67c737;
+  margin: 2px;
+  border-radius: 4px;
+  color: #fff;
+}
+
+.S_Search .S_cen .right .search {
+  display: block;
+  height: 100%;
+  width: 100%;
+  font-size: 16px;
+}
+
+.S_Search .S_cen .left {
+  flex: 1;
+  height: 100%;
+  padding-right: 4px;
+}
+
+.S_Search .S_cen .left input {
+  height: 100%;
+  width: 100%;
+  padding-right: 5px;
+  padding: 3px;
+  border: none;
+  border-radius: 4px;
+  font-size: 16px;
+  background-color: #fff;
+}
+
+.S_list {
+  margin-bottom: 0px;
+  width: 100%;
+  max-height: 90%;
+  max-height: calc(100% - 50px);
+  position: absolute;
+  z-index: 999;
+  left: 0px;
+  top: 50px;
+  background: #fff;
+  overflow: auto;
+  padding: 0px 5px;
+  border-bottom: 1px solid #ccc;
+  padding-bottom: 5px
+}
+
+.S_list li {
+  width: 100%;
+  height: 40px;
+  padding: 5px;
+  display: flex;
+  align-items: center;
+  color: #333;
+  border-radius: 3px;
+}
+
+.S_list li:not(:last-child(li)) {
+  border-bottom: 1px solid #ddd;
+}
+
+.S_list li.hover {
+  background: #67c737;
+  color: #fff;
+  opacity: 0.5;
+}
+
+.S_list li:hover {
+  background: #67c737;
+  color: #fff;
+  opacity: 0.5;
+}
+
+/*点标记 label样式设置*/
+.amap-marker-label {
+  position: absolute;
+  z-index: 2;
+  border: none;
+  border-radius: 3px;
+  padding: 5px;
+  background-color: white;
+  white-space: nowrap;
+  cursor: default;
+  font-size: 13px;
+  line-height: 14px;
+}
+
+.markerLabel {
+  position: relative;
+  top: 0;
+  right: 0;
+  min-width: 0;
+}
+
+/*高德地图信息窗体设置*/
+.amap-info-contentContainer {}
+
+.amap-info-content {
+  padding:8px;
+  border-radius: 5px;
+  border:none !important;
+  box-shadow: 0 0 10px 1px rgba(7,17,27,.1) !important;
+  a{
+    font-size: 15px;
+    margin: 3px 0;
+  }
+}
+
+.amap-info-outer {
+  border: 1px solid #ddd;
+  box-shadow: none;
+}
+
+.amap-info-close {
+  display: none;
+}
+
+.amap-info-sharp {
+  border: none;
+  box-shadow: none;
+  background-image: none;
+  background: #fff;
+  height: 13px !important;
+  width: 13px;
+  transform: rotate(-135deg);
+  top: -8px;
+}
+
+
+.amap-info-outer:hover {
+  box-shadow: 0 0 0 #333;
+}
+
+/*详情页switch分页器样式*/
+.PageTab.swiper-pagination {
+  top: 0px;
+  display: flex;
+  width: 100%;
+  height: 50px;
+  background: #eaeaea;
+  border-bottom: 1px solid #ddd;
+  padding: 0 7px;
+}
+
+.PageTab.swiper-pagination .swiper-pagination-bullet {
+  flex: 1;
+  border-radius: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  margin-top: 10%;
+  color:#333;
+  background: #eaeaea;
+  border-bottom:2px solid #eaeaea;
+  opacity: 1;
+  font-size: 16px;
+  margin: 0 !important;
+}
+
+.PageTab.swiper-pagination .swiper-pagination-bullet:not(:last-child) {
+  // border-right: 1px solid #ddd
+}
+
+.PageTab.swiper-pagination .swiper-pagination-bullet.swiper-pagination-bullet-active {
+  color: #6ea818;
+  border-bottom: 2px solid #6ea818;
+}
+/*没权限*/
+.notpower{
+  width: 100%;
+  margin-top: 0px;
+
+  &.top{
+    margin-top: 50px;
+  }
+  &.wid60{
+    img{ 
+       width: 25px;
+    }
+  }
+  img{
+    display: block;
+    margin: 0 auto;
+    width: 100px;
+  }
+}
+/*没数据*/
+.notdata_div{
+  width: 100%;
+  .massfont{
+    width: 100%;
+    color:#777;
+    display: block;
+    text-align: center;
+    font-size: 18px;
+  }
+  img{
+    margin:0 auto;
+    margin-top: 50px;
+  }
+}
+
+/*用户信息 联系我们故障维修公用样式*/
+.UserJcxx{
+  background: #f4f4f4;
+}
+.AppTitle{
+  width: 100%;
+  height: 50px;
+  position: relative;
+  box-shadow: 0 1px 5px 0 rgba(0, 0, 0, 0.05);
+  background: #fff;
+  .AT_leftIco{
+    width: 50px;
+    height: 100%;
+    position: absolute;
+    left: 0;
+    z-index: 999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color:#777;
+    font-size: 16px;
+  }
+  .AT_cenFont{
+    position: absolute;
+    left: 0px;
+    top:0px;
+    width: 100%;
+    height: 100%;
+        display: flex;
+    align-items: center;
+    justify-content: center;
+    h1{
+
+      font-size: 16px;
+      margin: 0;
+    }
+  }
+  .AT_Right{
+    position: absolute;right: 0;top:0;
+    height: 100%;
+    padding: 0 10px;
+    color:#777;
+    line-height: 50px;
+  }
+}
+.AppLogo{
+  width: 100%;
+  img{
+    margin: 10px auto 0;
+    width: 40%;
+  }
+}
+.InfoLine{
+  width: 100%;
+  background: #fff;
+  box-shadow: 0 1px 5px 0 rgba(0, 0, 0, 0.05);
+  padding: 10px;
+  margin-top: 10px;
+  .IL_title{
+    border-bottom: 1px dashed #d2d2d2;
+    padding-bottom:2px;
+    font-size: 16px;
+  }
+  .IL_cen{
+    padding: 10px 10px 0 20px;
+    font-size: 16px;
+    color:#666
+  }
+  .IL_input{
+    width: 100%;
+    height: 100%;border:1px solid #ddd;
+    padding: 8px;
+    border-radius: 4px;
+  }
+  .IL_textarea{
+    resize:none;
+    width: 100%;
+    height: 100%;border:1px solid #ddd;
+    padding: 8px;
+    border-radius: 4px;
+    min-height: 100px;  
+  }
+  .IL_img{
+    width: 40%;
+  }
+  .IL_input-group{
+    input{
+      border: 1px solid #ccc;
+      top:1px;
+      &:focus{
+        border: 1px solid #ccc;
+        box-shadow: none;
+      }
+    }
+  }
+}
+.IL_saveBtn {
+  width: 100%;
+  height: 40px;
+  margin-top: 15px;
+  border-radius:0 !important;
+  border: 0;
+  font-size: 16px !important;
+  outline: none;
+}
