@@ -36,6 +36,9 @@ module.exports = {
     alias: {
       'vue$': 'vue/dist/vue.esm.js',
       '@': resolve('src'),
+      'axios': path.resolve(__dirname, '../static/js/axios.min.js'),
+      'jquery': path.resolve(__dirname, '../static/js/jquery.min.js'),
+      'swiper': path.resolve(__dirname, '../static/js/swiper.min.js'),
       //'axios': path.resolve(__dirname, '../../static/js/axios.min.js'),
     }
   },
@@ -82,6 +85,8 @@ module.exports = {
     new webpack.ProvidePlugin({
      $: "jquery",
      jQuery: "jquery",
+     axios:'axios',
+     Swiper:'swiper',
      Popper: ['popper.js', 'default'],
     })
   ],

@@ -100,7 +100,8 @@ const router = new Router({
 })
 
 router.beforeEach((to, from, next) => {
-   store.state.token = `eyJST0xFIjoiMiwxMDIsYWRtaW4scm9vdCIsImFsZyI6IkhTMjU2In0.eyJqdGkiOiI5Nzk3NzUyYi0yZDU2LTQ0NmItYmRlYS1kZGFmMjRmOTZhOTQiLCJzdWIiOiJ5emNjZ19leiIsImlhdCI6MTU0NTM5NzQ0MywiZXhwIjoxNTQ1NDExODQzfQ.-mT__F8LGHS7shLoXVGVfyVzUc7T9mQrfcABBYk-tpI`;
+   store.state.token = `eyJST0xFIjoiMixyb290LGFkbWluLDEwMiIsImFsZyI6IkhTMjU2In0.eyJqdGkiOiJjZWUyNWIxMi1lZGVlLTRlY2ItOGU0My1jMGE4MmQzNWNhOWEiLCJzdWIiOiJ5emNjZ19leiIsImlhdCI6MTU0NTY5Njk1MSwiZXhwIjoxNTQ1NzExMzUxfQ.EImJGapFbCpOTcE-KFrenpmaKsGmJmTO244JIO97Sdc
+`;
    console.log(to)
    switch (to.name) {  //设置标题
         case 'hheContactus': Tool.setTitle("联系我们"); break;

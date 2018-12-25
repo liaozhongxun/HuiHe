@@ -16,7 +16,7 @@ import 'bootstrap/dist/js/bootstrap.min.js'
 
 //swiper
 import Swiper from 'swiper';
-import 'swiper/dist/css/swiper.min.css';
+import '../static/css/swiper.min.css';
 
 //小分队UI
 import xfdUI from './components/index';
