@@ -13,15 +13,14 @@
             </div>
             <ul class="A_S_Ul" v-show='Auth_Data.length&&Scan_Data.status== 0'>
               <li v-for='item in Auth_Data.list'>
-                <div class="left">
-                  <img :src='AlarIco_url' />
+                <div class="left" :style="{'background': 'url('+item.icon+') center center no-repeat','background-size':'contain'}">
                 </div>
                 <div class="right">
                   <div class="name">
                     <span>{{item.name}}</span>
                     <span style='color:#5EEA62' v-show='item.connstate=="在线"' class="state">{{item.connstate}}</span>
                     <span style='color:#858585' v-show='item.connstate=="离线"' class="state">{{item.connstate}}</span>
-                    <span style='color:#E83352' v-show='item.connstate=="警告"' class="state">{{item.connstate}}</span>
+                    <span style='color:#E83352' v-show='item.connstate=="告警"' class="state">{{item.connstate}}</span>
                     <span style='color:#EAA25C' v-show='item.connstate=="异常"' class="state">{{item.connstate}}</span>
                   </div>
                   <div class="ReceWarn_fa clearfix" >
@@ -29,7 +28,7 @@
                       <span v-show="!item.eeid==0" class="bjs">不接收</span>
                       <xfd-switch v-model="item.eeid==0" @change='change_rece(item)'></xfd-switch>
                   </div>
-                  <div class="time">{{item.lastcheck | filt_createtime}}</div>
+                  <span class="time">{{item.lastcheck | filt_createtime}}</span>
                 </div>
               </li>
             </ul>
@@ -46,15 +45,14 @@
             </div>
             <ul class="A_S_Ul" v-show='Scan_Data.length&&Scan_Data.status==0'>
               <li v-for='item in Scan_Data.list'>
-                <div class="left">
-                   <img :src='AlarIco_url' />
+                <div class="left" :style="{'background': 'url('+item.icon+') center center no-repeat','background-size':'contain'}">
                 </div>
                 <div class="right">
                   <div class="name">
                     <span>{{item.name}}</span>
                     <span style='color:#5EEA62' v-show='item.connstate=="在线"' class="state">{{item.connstate}}</span>
                     <span style='color:#858585' v-show='item.connstate=="离线"' class="state">{{item.connstate}}</span>
-                    <span style='color:#E83352' v-show='item.connstate=="警告"' class="state">{{item.connstate}}</span>
+                    <span style='color:#E83352' v-show='item.connstate=="告警"' class="state">{{item.connstate}}</span>
                     <span style='color:#EAA25C' v-show='item.connstate=="异常"' class="state">{{item.connstate}}</span>
                   </div>
                   <div class="time">{{item.lastcheck | filt_createtime}}</div>
@@ -71,7 +69,8 @@
   </div>
 </template>
 <script>
-import Tool from '../utilities/Tool'
+import {Tool,TheTool} from '../utilities'
+import { Toast } from 'mint-ui';
 // import { Switch } from 'mint-ui'
 import {
   mapState,
@@ -117,6 +116,8 @@ export default {
             length : res.data.result.list.length,
             status:res.data.status
           }
+          _this.Auth_Data.list = TheTool.mapDevImgTool(_this.Auth_Data.list,_this.$store.state.DevImg_data);
+          console.log(TheTool.mapDevImgTool(_this.Auth_Data.list,_this.$store.state.DevImg_data))
       }]);
     },
     dev_byscan(){
@@ -127,7 +128,7 @@ export default {
             length : res.data.result.list.length,
             status:res.data.status
           }
-
+          _this.Scan_Data.list = TheTool.mapDevImgTool(_this.Scan_Data.list,_this.$store.state.DevImg_data);
       }]);
     },
     undevbind(item){
@@ -148,7 +149,7 @@ export default {
               callback: () => {
                 _this.unsubscribe([{'ucode':item.ucode},function(res){
                     // if(res.status == 0){
-                      _this.$xfdDialog.toast('解绑成功');
+                      Toast.toast('解绑成功');
                       _this.dev_byscan()
                     // }
                     // else{
@@ -230,11 +231,10 @@ export default {
     padding-left: 7px;
     display: flex;
     .ReceWarn_fa{
-       margin-bottom:10px;
+       margin-bottom:0px;
        span{
         display: inline-block;
         height: 100%;
-        line-height: 40px;
        }
        .js{
          color:#6ea818;
@@ -246,9 +246,12 @@ export default {
     .left{
       flex:1;
       // background-image: url('./static/images/shebei.png');
+      width:60px;
+      height: 60px;
+      margin-right: 10px;
       img{
         height:60px;
-        margin: 0auto;
+        margin: 0 auto;
       }
     }
     .right{
@@ -264,9 +267,10 @@ export default {
         text-align: center;
         display: block;
         width: 100%;
-        padding: 1px;
+        padding: 2px;
+        margin-top: 13px;
       }
-      margin-left: 10px;
+      margin-left: 13px;
     }
     .name{
        font-size: 16px;

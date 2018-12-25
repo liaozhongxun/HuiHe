@@ -1,6 +1,5 @@
-import { Api } from '../../utilities';
+import { Api,Tool,TheTool } from '../../utilities';
 import * as DevinfoTypes from '../types/devinfo.types';
-import Tool from '../../utilities/Tool';
 import axios from 'axios';
 import { Toast } from 'mint-ui';
 
@@ -23,7 +22,7 @@ const DevInfoMutations = {
         state.mapDatas = [];
         for (let item in state.DevData) {
           if (state.DevData[item].lng != null || state.DevData[item].lat != null) {
-            state.mapDatas.push(Tool.listItem(state.DevData[item]));
+            state.mapDatas.push(TheTool.listItem(state.DevData[item]));
           }
         }
         xfdToast.loading.open();

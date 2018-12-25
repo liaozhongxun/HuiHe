@@ -12,6 +12,8 @@ const state = {
    expires:'',
    intval:null,
 
+   DevImg_data:'',
+
    notdata_url:'./static/images/notdata.png', //没得到数据小图标
    notpowe_url:'./static/images/notpower.png', //没权限图标
  

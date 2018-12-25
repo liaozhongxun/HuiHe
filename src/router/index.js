@@ -1,7 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import { Api } from '../utilities'
-import Tool from '../utilities/Tool'
+import { Api,Tool,TheTool } from '../utilities';
 import store from '../vuex/store/store'
 import xfdToast from '../components/dialog/index';
 
@@ -90,6 +89,11 @@ const route = [
     component: resolve => require(['@/views/hhe_userInfo'],resolve)
   },
   {
+    path: '/hheAdminUserInfo',
+    name: 'hheAdminUserInfo',
+    component: resolve => require(['@/views/hhe_adminUserInfo'],resolve)
+  },
+  {
     path: '/hheContactus',
     name: 'hheContactus',
     component: resolve => require(['@/views/hhe_contactus'],resolve)
@@ -99,9 +103,20 @@ const router = new Router({
   routes: route
 })
 
+
+const overallReset = {
+   getUserImg:()=>{ 
+    Api.getShowDevImg().then(function(res) {
+      if(res.data.status == 0){
+           localStorage.setItem('DivShowImg', JSON.stringify(res.data.result))
+           console.log('第一次')
+           store.state.DevImg_data = res.data.result;
+      }
+    })
+   }
+}
 router.beforeEach((to, from, next) => {
-   store.state.token = `eyJST0xFIjoiMixyb290LGFkbWluLDEwMiIsImFsZyI6IkhTMjU2In0.eyJqdGkiOiJjZWUyNWIxMi1lZGVlLTRlY2ItOGU0My1jMGE4MmQzNWNhOWEiLCJzdWIiOiJ5emNjZ19leiIsImlhdCI6MTU0NTY5Njk1MSwiZXhwIjoxNTQ1NzExMzUxfQ.EImJGapFbCpOTcE-KFrenpmaKsGmJmTO244JIO97Sdc
-`;
+   store.state.token = `eyJST0xFIjoicm9vdCIsImFsZyI6IkhTMjU2In0.eyJqdGkiOiI3N2Q4ODFiYS1jNGU0LTQ2ZmQtOTA5Yi00YWRmNzhlNTE1ZWYiLCJzdWIiOiIxMjM0NTYiLCJpYXQiOjE1NDU3MjQxNzAsImV4cCI6MTU0NTczODU3MH0.2aSHWhwlHHkdwHC6VlK6aK4wD5zcM3ctzltoOSaWrQU`;
    console.log(to)
    switch (to.name) {  //设置标题
         case 'hheContactus': Tool.setTitle("联系我们"); break;
@@ -121,7 +136,6 @@ router.beforeEach((to, from, next) => {
   }
 
   if (store.state.token) {
-    let cont = store.state.expires * 1000 - 30000;
     clearInterval(store.state.intval);
     store.state.intval = null
     store.state.intval = setInterval(function() {
@@ -129,7 +143,15 @@ router.beforeEach((to, from, next) => {
         store.state.token = res.data.result.token
         store.state.expires = res.data.result.expires
       })
-    }, 600000)
+    }, 600000);
+
+    //localStorage.removeItem('DivShowImg');
+    if(JSON.parse(localStorage.getItem('DivShowImg')) == null){
+       overallReset.getUserImg()
+    }else{
+      store.state.DevImg_data = JSON.parse(localStorage.getItem('DivShowImg'));
+    }
+
     next();
   } else {
     if (to.path === '/notTokenPage') {
@@ -141,5 +163,7 @@ router.beforeEach((to, from, next) => {
     }
   }
 })
+
+
 
 export default router;

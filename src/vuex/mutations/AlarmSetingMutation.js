@@ -1,6 +1,5 @@
-import { Api } from '../../utilities';
+import { Api,Tool,TheTool } from '../../utilities';
 import * as AlarmSetingTypes from '../types/alarmseting.types';
-import Tool from '../../utilities/Tool';
 
 const DeviceDetInfoMutation = {
   state: {},
@@ -49,6 +48,16 @@ const DeviceDetInfoMutation = {
     ['updateUser']({ commit, state }, params) { //更新用户信息
       Api.updateUser(params[0]).then(function(res) {
         params[1](res)
+      })
+    },
+    ['idGetUserInfo']({ commit, state }, params) { //通过id获取用户信息
+      Api.idGetUserInfo(params[0]).then(function(res) {
+        params[1](res)
+      })
+    },
+    ['adminUpdateUser']({ commit, state }, params) { // 管理员更新用户信息
+      Api.adminUpdateUser(params[0]).then(function(res) {
+         params[1](res)
       })
     },
 

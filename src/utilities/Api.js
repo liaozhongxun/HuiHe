@@ -22,9 +22,12 @@ const delSetting = BS + '/alarm/delSetting'
 const unsubscribe = BS + '/device/unsubscribe'
 const imgUpload = BS + '/file/upload/base64'
 const saveFaReInfo = BS + '/failuresRepair/save'
-const GetUserInfo = SCS + '/auth/users/current' 
+const GetUserInfo = SCS + '/auth/users/current'
+const idGetUserInfo = SCS + '/auth/getUser' 
 const updateUser = SCS + '/auth/admin/updateUser4WeChat'
+const adminUpdateUser = SCS + '/auth/admin/adminUpdateUser4Wechat'
 const faReInfoNotes = BS + '/failuresRepair/showByUser'
+const getShowDevImg = CS + '/currency/showDeviceModel'  //2.4.1. 查询所有设备类型
 
 const BaseApi = {
   showDeviceAll: () => { //获取地图上显示点的数据
@@ -124,16 +127,33 @@ const BaseApi = {
   GetUserInfo:() =>{ //2.4.2.	当前用户查看信息
     return Axios.res('get', GetUserInfo);
   },
+  idGetUserInfo:(opts) =>{ //2.4.4. 用户ID查看详细信息
+    return Axios.res('post', idGetUserInfo,{
+      'id':opts.id
+    });
+  },
   getSetting:() =>{ //2.4.	获取微信配置信息
     return Axios.res('get', getSetting);
   },
   updateUser:(opts) =>{ //2.4.8.	当前用户更新信息
     return Axios.res('post', updateUser,{
     	'username':opts.username,
-        'displayName':opts.displayName,
+      'displayName':opts.displayName,
 	    'email':opts.email,
 	    'phone': opts.phone,
     });
+  },
+  adminUpdateUser:(opts) =>{ //2.4.9. 管理员更新用户信息
+    return Axios.res('post', adminUpdateUser,{
+      'id': opts.id,
+      'description':opts.description,
+      'displayName':opts.displayName,
+      'email':opts.email,
+      'phone': opts.phone,
+    });
+  },
+  getShowDevImg:(opts) =>{ //2.4.1. 查询所有设备类型  查找设备小图片
+    return Axios.res('post', getShowDevImg,{});
   },
 
 

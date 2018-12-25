@@ -42,7 +42,7 @@
                   <span>{{item.name}}</span>
                   <span style='color:#5EEA62' v-show='item.connstate=="在线"' class="right">{{item.connstate}}</span>
                   <span style='color:#858585' v-show='item.connstate=="离线"' class="right">{{item.connstate}}</span>
-                  <span style='color:#E83352' v-show='item.connstate=="警告"' class="right">{{item.connstate}}</span>
+                  <span style='color:#E83352' v-show='item.connstate=="告警"' class="right">{{item.connstate}}</span>
                   <span style='color:#EAA25C' v-show='item.connstate=="异常"' class="right">{{item.connstate}}</span>
                 </li>
                 <li v-show='not_Show_Values' class="notpower wid60">
@@ -80,6 +80,7 @@
                 <li v-show='last_loding' class="last_loding">
                     <img :src="load_url"/>
                 </li>
+                <li v-show="notMore" class="notMore">没有更多了</li>
               </ul>
             </div>
           </div>
@@ -118,6 +119,7 @@ export default {
       lsjg_lastpage:'',
       not_Show_Alarm:false,
       not_Show_Values:false,
+      notMore:false
     }
   },
   components: {
@@ -125,7 +127,7 @@ export default {
   },
   filters: {
     filt_local_flag(val) {
-      if (val) {
+      if (!val) {
         return '是';
       } else {
         return '否'
@@ -245,12 +247,14 @@ export default {
 
     if(!this.not_Show_Alarm){
       Tool.scrollpage(scroll_div, scroll_page, 50, function() {
-        _this.WarnInde++
+        _this.WarnInde++ ;
         _this.last_loding = true;
-        _this.Get_Show_Alarm([{ 'ucode': _this.ucode, 'pageNumber': _this.WarnInde,'pageSize':5}, function(res) {
+        _this.Get_Show_Alarm([{ 'ucode': _this.ucode, 'pageNumber': _this.WarnInde,'pageSize':15}, function(res) {
           _this.last_loding = false;
-          if (res.data.result.list.lenght != 0) {
+          if (res.data.result.totalPage >=  _this.WarnInde) {
             _this.S_A_Data = _this.S_A_Data.concat(res.data.result.list);
+          }else{
+            console.log('没有更多了')
           }
         }])
       })
@@ -290,6 +294,7 @@ body {
   height: 100%;
   padding-top: 50px;
   overflow: auto;
+    background: #f5f5f5
 }
 .warn_ul {
   width: 100%;
@@ -309,6 +314,12 @@ body {
   }
   .last_2{
       border-bottom: 1px solid #dddddd;
+  }
+  .notMore{
+    width: 100%;
+    text-align: center;
+    display: block;
+    padding: 20px 0;
   }
   li {
     display: flex;

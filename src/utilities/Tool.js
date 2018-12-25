@@ -23,7 +23,7 @@ export default class Tool {
       case '离线':
         return 1;
         break;
-      case '警告':
+      case '告警':
         return 2;
         break;
       case '异常':
@@ -78,12 +78,12 @@ export default class Tool {
           if (scrollTop + docHeight == pageHeight) {
             callback()
           }
-          console.log('======================')
-          console.log(scrollTop)
-          console.log(docHeight)
-          console.log(scrollTop + docHeight)
-          console.log(pageHeight)
-          console.log('======================')
+          // console.log('======================')
+          // console.log(scrollTop)
+          // console.log(docHeight)
+          // console.log(scrollTop + docHeight)
+          // console.log(pageHeight)
+          // console.log('======================')
         });
   }
   //返回?后面指定的参数

@@ -1,6 +1,5 @@
-import { Api } from '../../utilities';
+import { Api,Tool,TheTool } from '../../utilities';
 import * as DevDetinfoTypes from '../types/devdetinfo.types';
-import Tool from '../../utilities/Tool';
 
 const DeviceDetInfoMutation = {
   state: {},

@@ -5,8 +5,8 @@
         <div class="left">
           <input v-model='interinfo' ref="SearObj" @focus='getDevBy()' id='SearObj' type="text" name="" placeholder="请输入设备信息" />
         </div>
-        <button @click='getDevBy()' ref="SearClose" class="right p_center">
-          搜索
+        <button @click='getDevBy()' ref="SearClose" class="right p_center glyphicon glyphicon-search">
+          
         </button>
       </div>
     </div>

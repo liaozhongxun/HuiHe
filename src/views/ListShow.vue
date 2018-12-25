@@ -5,18 +5,22 @@
         <div class="left">
           <input v-model="interinfo" ref="SearObj" id='L_SearObj' type="text" name="" placeholder="请输入设备信息" />
         </div>
-        <button class="right p_center btn btn-default" @click='getDevBy()'>搜索</button>
+        <button class="right p_center btn btn-default glyphicon glyphicon-search" @click='getDevBy()'></button>
       </div>
     </div>
 <!--     <ul ref="S_list" class="S_list">
       <li @click='Lookup(item)' v-for="item in Search_list_li">{{item.name}}</li>
     </ul> -->
-    <div class="List_Device">
-      <ul class="List_Device_ul clearfix" v-infinite-scroll="loadMore" infinite-scroll-disabled="loading" infinite-scroll-distance="3">
+    <div ref='List_Device' class="List_Device">
+      <ul ref="List_Device_ul" class="List_Device_ul clearfix">
         <li class="list" v-for="item in DevByList" @click='handleGoto("/DeviceDetInfo",{ucode:item.ucode})'>
+          <div class="leftImg" :style="{'background': 'url('+item.icon+') center center no-repeat','background-size':'contain'}">
+            
+          </div>
+
           <div class="font">
             <div class="de_name" :title='item.name'>
-              <span class="key">名称 ：</span>
+              <span class="key"></span>
               <span class="value">{{item.name}}</span>
             </div>
             <div class="de_rname" :title='item.rname'>
@@ -31,19 +35,20 @@
               <span class="key">状态 ： </span>
               <span style='color:#5EEA62' v-show='item.connstate=="在线"' class="value">{{item.connstate}}</span>
               <span style='color:#858585' v-show='item.connstate=="离线"' class="value">{{item.connstate}}</span>
-              <span style='color:#E83352' v-show='item.connstate=="警告"' class="value">{{item.connstate}}</span>
+              <span style='color:#E83352' v-show='item.connstate=="告警"' class="value">{{item.connstate}}</span>
               <span style='color:#EAA25C' v-show='item.connstate=="异常"' class="value">{{item.connstate}}</span>
             </div>
             <div>{{item.style}}</div>
           </div>
         </li>
-        <li class="more" @click='lookMore()' v-show='ismore'>查看更多 >></li>
+        <li class="more" v-show='ismore'>没有更多了</li>
       </ul>
     </div>
   </div>
 </template>
 
 <script>
+import { TheTool,Tool } from '../utilities';
 import { InfiniteScroll } from 'mint-ui';
 import {
   mapState,
@@ -67,16 +72,6 @@ export default {
     ...mapActions({
       Ser_DevBy: 'SER_DEVBY'
     }),
-    loadMore() {
-      this.loading = true;
-      setTimeout(() => {
-        let last = this.list[this.list.length - 1];
-        for (let i = 1; i <= 3; i++) {
-          this.list.push(last + i);
-        }
-        this.loading = false;
-      }, 2500);
-    },
     handleGoto(type,query) {
       let Query= query||'';
       this.$router.push({
@@ -86,12 +81,15 @@ export default {
     },
     lookMore(){
         let _this = this;
-
-        this.Ser_DevBy([{'name':'','pageSize':20,'pageNumber':_this.pageIndex},function(res){
-        _this.DevByList = _this.DevByList.concat(res.data.result.list) 
+        this.Ser_DevBy([{'name':'','pageSize':10,'pageNumber':_this.pageIndex},function(res){
+             if(res.data.result.totalPage >= res.data.result.pageNumber){
+                _this.DevByList = _this.DevByList.concat(res.data.result.list) 
+             }else{
+                _this.ismore = true;
+             }
              _this.pageIndex++;
-
-       }])
+             _this.DevByList = TheTool.mapDevImgTool(_this.DevByList,_this.$store.state.DevImg_data);
+        }])
     },
     getDevBy(opts){
        let _this = this;
@@ -99,24 +97,28 @@ export default {
        _this.pageIndex = 2
        if(opts){
            Opts = opts;
-           this.ismore = true;
        }else{
            if(_this.interinfo == ''){
              Opts = {'name':'','pageSize':20,'pageNumber':1};
-             this.ismore = true;
            }else{
              Opts = {'name':_this.interinfo};
-             this.ismore = false;
            }
        }
        this.Ser_DevBy([Opts,function(res){
-             _this.ismore = false;
              _this.DevByList = res.data.result.list;
+             _this.DevByList = TheTool.mapDevImgTool(_this.DevByList,_this.$store.state.DevImg_data);
+
        }])
     }
   },
   mounted() {
-    this.getDevBy({'name':'','pageSize':20,'pageNumber':1});
+    let _this = this;
+    _this.ismore = false;
+    this.getDevBy({'name':'','pageSize':10,'pageNumber':1});
+    console.log(_this.$refs.List_Device);
+    Tool.scrollpage(_this.$refs.List_Device,_this.$refs.List_Device_ul,108, function() {
+            _this.lookMore()
+    })
   },
 }
 
@@ -141,24 +143,27 @@ export default {
     .List_Device_ul {
       background: #eee;
       padding:8px;
-      padding-top: 6px;
       padding-bottom: 0;
       margin-bottom: 0;
-
+    
       .list {
-        width: 49%;
+        width: 96%;
         background: #fff;
         padding: 8px;
-        margin-bottom: 5px;
+        margin:0 auto;
+        margin-bottom: 10px;
         border-radius: 3px;
+        font-size: 15px;
+        display: flex;
+
         // border: 1px solid #d7d7d7;
         box-shadow: 0 0 10px 1px rgba(7,17,27,.1);
-        &:nth-child(odd){
-          float: left;
-        }
-        &:nth-child(even){
-          float: right;
-        }
+        // &:nth-child(odd){
+        //   float: left;
+        // }
+        // &:nth-child(even){
+        //   float: right;
+        // }
         div{
           overflow: hidden;
           text-overflow: ellipsis;
@@ -166,19 +171,32 @@ export default {
           cursor: pointer;
         }
         .de_name{
-          font-size: 15px;
+          font-size: 16px;
           color:#000;
           // font-weight: bold;
-          margin-bottom: 2px;
+          margin-bottom:5px;
+          color:#000;
+          padding-bottom: 5px;
+          border-bottom: 1px dashed #ccc;
+        }
+        .font{
+           flex:1;
+           // font-size: 16px;
+        }
+        .leftImg{
+          width:80px;height: 80px;
+          margin-top: 10px;
+          // border:1px solid #eee;
+          margin-right: 10px;
         }
       }
       .more{
         width: 100%;
         height: 30px;
-        background: #67c737;
+        background: #fff;
         opacity: 0.7;
-        margin-bottom: 5px;
-        color:#eee;
+        margin-bottom:10px;
+        color:#333;
         border-radius: 3px;
         display: flex;
         align-items: center;
