@@ -116,7 +116,7 @@ const overallReset = {
    }
 }
 router.beforeEach((to, from, next) => {
-   store.state.token = `eyJST0xFIjoicm9vdCIsImFsZyI6IkhTMjU2In0.eyJqdGkiOiI3N2Q4ODFiYS1jNGU0LTQ2ZmQtOTA5Yi00YWRmNzhlNTE1ZWYiLCJzdWIiOiIxMjM0NTYiLCJpYXQiOjE1NDU3MjQxNzAsImV4cCI6MTU0NTczODU3MH0.2aSHWhwlHHkdwHC6VlK6aK4wD5zcM3ctzltoOSaWrQU`;
+   //store.state.token = `eyJST0xFIjoicm9vdCIsImFsZyI6IkhTMjU2In0.eyJqdGkiOiI3N2Q4ODFiYS1jNGU0LTQ2ZmQtOTA5Yi00YWRmNzhlNTE1ZWYiLCJzdWIiOiIxMjM0NTYiLCJpYXQiOjE1NDU3MjQxNzAsImV4cCI6MTU0NTczODU3MH0.2aSHWhwlHHkdwHC6VlK6aK4wD5zcM3ctzltoOSaWrQU`;
    console.log(to)
    switch (to.name) {  //设置标题
         case 'hheContactus': Tool.setTitle("联系我们"); break;

@@ -5,6 +5,9 @@
       <div class="AT_cenFont"><h1>{{AT_cenFont}}</h1>
       </div>
     </div>
+    <div class="headPhoto">
+        <div class="cen" :style="{'background': 'url('+headPhoto+') center center no-repeat','background-size':'contain'}"></div>
+    </div>
     <div class="InfoLine">
       <div class="IL_title">姓 名 :</div>
       <div class="IL_cen">
@@ -45,6 +48,7 @@ export default {
   data() {
     return {
       AT_cenFont: '管理用户',
+      headPhoto:'',
       defaultInfo:{
         displayName:'',
         description:'',
@@ -113,6 +117,7 @@ export default {
             phone:datas.phone,
             id:datas.id
           }
+          _this.headPhoto = datas.headimgurl || '/static/images/notdata.png';
        }])
      }else{
        this.$router.push({
@@ -125,6 +130,22 @@ export default {
 
 </script>
 <style lang='scss' scoped>
-
+  .headPhoto{
+    width: 100%;
+    height: 200px;
+    padding: 20px 0;
+    background: #fff;
+      box-shadow: 0 1px 5px 0 rgba(0, 0, 0, 0.05);
+      border-top: 5px solid #EAA25C;
+      margin-top: 10px;
+    .cen{
+      width: 140px;
+      height: 140px;
+      border-radius: 70px;
+      margin: 0 auto;
+      background: #fff;
+      box-shadow: 0px 1px 0px rgba(255, 255, 255, 0.1), inset 0px 1px 1px rgba(0, 0, 0, 0.7);
+    }
+  }
 
 </style>
