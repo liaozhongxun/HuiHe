@@ -97,6 +97,11 @@ const route = [
     path: '/hheContactus',
     name: 'hheContactus',
     component: resolve => require(['@/views/hhe_contactus'],resolve)
+  },
+  {
+    path: '/hheDetchars',
+    name: 'hheDetchars',
+    component: resolve => require(['@/views/hhe_detchars'],resolve)
   }
 ]
 const router = new Router({
@@ -143,7 +148,9 @@ router.beforeEach((to, from, next) => {
         store.state.token = res.data.result.token
         store.state.expires = res.data.result.expires
       })
-    }, 600000);
+      console.log(store.state.token)
+    }, 100000);
+
 
     //localStorage.removeItem('DivShowImg');
     if(JSON.parse(localStorage.getItem('DivShowImg')) == null){

@@ -9,6 +9,9 @@
         <li v-for="(item,key) in filesUrl">
            <div class="li_cen" @click='ShowBigImg(key)' :style="{'background': 'url('+item+') center center no-repeat','background-size':'contain'}"></div>
         </li>
+        <li class="Ul_first">
+           <input ref='upfileinput' type="file" name="image" accept="image/*" @change='handleInputChange' multiple="multiple" />
+        </li>
     </ul>
     <div class="preWarp" v-show='precentShow'>
       <mt-progress :value="precent">

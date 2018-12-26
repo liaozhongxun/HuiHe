@@ -11,7 +11,7 @@
     <div class="InfoLine">
       <div class="IL_title">公司名称</div>
       <div class="IL_cen">
-        <div class="IL_font">福建辉和智能科技有限公司</div>
+        <div class="IL_font">{{datas.oname}}</div>
       </div>
     </div>
     <div class="InfoLine">

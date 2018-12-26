@@ -48,7 +48,7 @@
                 <li v-show='not_Show_Values' class="notpower wid60">
                    <img :src="$store.state.notpowe_url" />
                 </li>
-                <li v-show='item.dcode == sItem.dcode && !not_Show_Values' v-for='(sItem,Index) in S_V_Data'>
+                <li @click='goEcharsvir("/hheDetchars",{"dcode":sItem.dcode})' v-show='item.dcode == sItem.dcode && !not_Show_Values' v-for='(sItem,Index) in S_V_Data'>
                   <div class='sk_dev clearfix' v-for='(ssItem,index) in sItem.myKey'>
                     <span class='sk_devstate' v-for="child in ssItem">
                       {{child}}
@@ -119,7 +119,8 @@ export default {
       lsjg_lastpage:'',
       not_Show_Alarm:false,
       not_Show_Values:false,
-      notMore:false
+      notMore:false,
+      fifterDcode:['th'],
     }
   },
   components: {
@@ -145,6 +146,25 @@ export default {
       Get_Show_Alarm: 'GET_SHOW_ALARM',
       Get_Show_Values: 'GET_SHOW_VALUES',
     }),
+    goEcharsDatavir(item){
+       let setArr = this.fifterDcode;
+       if(setArr.indexOf(item.ucode) == 0){
+          return true;
+       }
+    },
+    goEcharsvir(type,query){
+      let setArr = this.fifterDcode;
+       if(setArr.indexOf(query.dcode ) == 0){
+          this.handleGoto(type,query)
+       }
+    },
+    handleGoto(type,query) {
+      let Query= query||'';
+      this.$router.push({
+        path: type,
+        query:Query
+      });
+    },
     InZation() {
       let _this = this;
       _this.Get_Device_Host([{ 'ucode': _this.ucode }, function(res) {
@@ -169,7 +189,17 @@ export default {
         if(res.data.result.length == 0){
             _this.sksj_nullimg = true;
         }
-        _this.D_D_Data = res.data.result
+        _this.$store.state.filterEcher = [];
+        _this.D_D_Data = res.data.result;
+        _this.D_D_Data.map(function(item,index){
+            if(_this.goEcharsDatavir(item)){  
+              let ar = {};
+              ar.ucode = item.ucode;
+              ar.dcode = item.dcode;
+              ar.model = item.model;
+              _this.$store.state.filterEcher.push(ar)
+            }
+        });
       }])
 
       _this.Get_Show_Alarm([{ 'ucode': _this.ucode }, function(res) {
@@ -218,7 +248,7 @@ export default {
 
     let swiper = new Swiper('.swiper-container', {
       pagination: '.swiper-pagination',
-      spaceBetween: 30,
+      spaceBetween: 1,
 
       paginationClickable: true,
       paginationBulletRender: function(swiper, index, className) {

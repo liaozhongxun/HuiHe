@@ -6,19 +6,19 @@
       </div>
     </div>
     <div class="InfoLine">
-      <div class="IL_title">账 号 :</div>
+      <div class="IL_title">账 号 :<span class="needs">*</span></div>
       <div class="IL_cen">
-        <input maxlength="50" v-model='defaultInfo.username' class="IL_input" placeholder="请输入账号">
+        <input maxlength="50" v-model='defaultInfo.username' @input="outfont" class="IL_input" placeholder="请输入账号">
       </div>
     </div>
     <div class="InfoLine">
-      <div class="IL_title">姓 名 :</div>
+      <div class="IL_title">姓 名 :<span class="needs">*</span></div>
       <div class="IL_cen">
         <input maxlength="10" v-model='defaultInfo.displayName' class="IL_input" placeholder="请输入名称">
       </div>
     </div>
     <div class="InfoLine">
-      <div class="IL_title">手机号 :</div>
+      <div class="IL_title">手机号 :<span class="needs">*</span></div>
       <div class="IL_cen">
         <input ref='val_lxdh' Tit='手机号码'  v-model='defaultInfo.phone' class="IL_input" placeholder="请输入手机号">
       </div>
@@ -45,6 +45,7 @@ export default {
   data() {
     return {
       AT_cenFont: '用户信息',
+      originalname:'',
       defaultInfo:{
         displayName:'',
         username:'',//用户账号
@@ -60,6 +61,11 @@ export default {
     }),
     closeWxpage(){
       WeixinJSBridge.call("closeWindow")
+    },
+    outfont(){
+      console.log(this.defaultInfo);
+      let _this = this;
+      _this.defaultInfo.username=_this.defaultInfo.username.replace(/[\u4e00-\u9fa5]/ig,'')
     },
     myValidata(regexp,str){
         if(!new RegExp(regexp).test(this.$refs[str].value)){
@@ -85,12 +91,20 @@ export default {
           let vs2 = _this.myValidata(/^[a-z0-9]+([._\\-]*[a-z0-9])*@([a-z0-9]+[-a-z0-9]*[a-z0-9]+.){1,63}[a-z0-9]+$/,'val_yx');
           if(!vs1){
             Toast('手机格式不正确')
-          }else if(!vs2){
+          }else if(!vs2&&this.defaultInfo.email!=''){
             Toast('邮箱格式不正确')
           }else{
             _this.updateUser([_this.defaultInfo,function(res){
                if(res.data.status == 0){
-                  Toast('保存成功')
+                  console.log(_this.originalname+":::"+_this.defaultInfo.username)
+                  if(_this.originalname == _this.defaultInfo.username){
+                     Toast('保存成功')
+                  }else{
+                     Toast('保存成功,由于账号变更需进入页面生效,稍后系统将自动关闭页面')
+                     setTimeout(function(){
+                        _this.closeWxpage();
+                     },4000)
+                  }
                }else{
                   Toast(res.data.message)
                }
@@ -105,6 +119,7 @@ export default {
      _this.GetUserInfo(function(res){
         let datas = res.data.result;
         console.log(res.data.result);
+        _this.originalname = datas.username;
         _this.defaultInfo = {
           displayName:datas.displayName,
           username:datas.username,//用户账号

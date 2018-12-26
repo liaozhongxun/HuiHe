@@ -9,7 +9,7 @@
         <div class="cen" :style="{'background': 'url('+headPhoto+') center center no-repeat','background-size':'contain'}"></div>
     </div>
     <div class="InfoLine">
-      <div class="IL_title">姓 名 :</div>
+      <div class="IL_title">姓 名 :<span class="needs">*</span></div>
       <div class="IL_cen">
         <input maxlength="10" v-model='defaultInfo.displayName' class="IL_input" placeholder="请输入名称">
       </div>
@@ -37,6 +37,7 @@
 </template>
 <script>
 import { Toast } from 'mint-ui';
+import Tool from '../utilities/Tool'
 import {
   mapState,
   mapActions,
@@ -78,25 +79,26 @@ export default {
       if(!this.defaultInfo.displayName){
           Toast('用户名不能为空');
           return;
-      }else if(!this.defaultInfo.phone){
-          Toast('电话号码不能为空');
-          return;
       }else{
 
           let vs1 = _this.myValidata(/^1(3|4|5|7|8)\d{9}$/,"val_lxdh");
           let vs2 = _this.myValidata(/^[a-z0-9]+([._\\-]*[a-z0-9])*@([a-z0-9]+[-a-z0-9]*[a-z0-9]+.){1,63}[a-z0-9]+$/,'val_yx');
-          if(!vs1){
+          if(!vs1&&this.defaultInfo.phone!=''){
             Toast('手机格式不正确')
-          }else if(!vs2){
+          }else if(!vs2&&this.defaultInfo.email!=''){
             Toast('邮箱格式不正确')
           }else{
-            _this.adminUpdateUser([_this.defaultInfo,function(res){
-               if(res.data.status == 0){
-                  Toast('保存成功')
-               }else{
-                  Toast(res.data.message)
-               }
-            }])
+              // if(Tool.objectKeyIsEmpty(_this.defaultInfo,'id')){
+              //     Toast('请设置用户信息')
+              // }else{
+                  _this.adminUpdateUser([_this.defaultInfo,function(res){
+                     if(res.data.status == 0){
+                        Toast('保存成功')
+                     }else{
+                        Toast(res.data.message)
+                     }
+                  }])
+              // }
           }
         
       }

@@ -55,6 +55,23 @@ export default class Tool {
       val=val<10?'0'+val:val;
       return val
   }
+  // 判断对象所有属性是否都为空
+  static objectKeyIsEmpty(obj,not) {
+    let empty = null;
+    for (const key in obj) {
+        if (obj.hasOwnProperty(key)) {
+            if(key!=not){
+              if (obj[key] == null || obj[key] == '') {
+                  empty = true;
+              } else {
+                  empty = false;
+                  break;
+              }
+            }
+        }
+    }
+    return empty;
+  }
   //获取?后面所有参数
   static getUrlParams() {
     let url = window.location.search;
