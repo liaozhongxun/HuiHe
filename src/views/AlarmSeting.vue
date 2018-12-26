@@ -149,7 +149,7 @@ export default {
               callback: () => {
                 _this.unsubscribe([{'ucode':item.ucode},function(res){
                     // if(res.status == 0){
-                      Toast.toast('解绑成功');
+                      Toast('解绑成功');
                       _this.dev_byscan()
                     // }
                     // else{

@@ -35,12 +35,17 @@ const webpackConfig = merge(baseWebpackConfig, {
       'process.env': env
     }),
     new UglifyJsPlugin({
+      //开启缓存
+      cache: true,
       uglifyOptions: {
         compress: {
-          warnings: false
+          warnings: false,
+          //去掉console.log
+          drop_console:true,
         }
       },
       sourceMap: config.build.productionSourceMap,
+      // 允许并发
       parallel: true
     }),
     // extract css into its own file

@@ -105,7 +105,7 @@ export default {
   mounted() {
      let _this = this;
      // localStorage.setItem('key',608);
-     let keyId = JSON.parse(window.localStorage.getItem("key")); 
+     let keyId = JSON.parse(window.localStorage.getItem("keycode")); 
      if(keyId){
        _this.idGetUserInfo([{'id':keyId},function(res){
           let datas = res.data.result;
@@ -132,15 +132,15 @@ export default {
 <style lang='scss' scoped>
   .headPhoto{
     width: 100%;
-    height: 200px;
-    padding: 20px 0;
+    height: 120px;
+    padding:7px 0 8px 0;
     background: #fff;
       box-shadow: 0 1px 5px 0 rgba(0, 0, 0, 0.05);
-      border-top: 5px solid #EAA25C;
+      border-top: 3px solid #EAA25C;
       margin-top: 10px;
     .cen{
-      width: 140px;
-      height: 140px;
+      width: 100px;
+      height: 100px;
       border-radius: 70px;
       margin: 0 auto;
       background: #fff;
