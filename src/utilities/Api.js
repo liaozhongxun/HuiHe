@@ -5,6 +5,7 @@ const CS = window.applicationConfig.currencyServer;
 const WMS = window.applicationConfig.wechatMpServer;
 const BS = window.applicationConfig.businessServer;
 const SCS = window.applicationConfig.securityServer;
+const FS = window.applicationConfig.influxdbServer;
 
 const showDeviceAll = CS + '/currency/showDeviceAll'
 const showDeviceBy = CS + '/page/currency/showDeviceBy'
@@ -28,6 +29,7 @@ const updateUser = SCS + '/auth/admin/updateUser4WeChat'
 const adminUpdateUser = SCS + '/auth/admin/adminUpdateUser4Wechat'
 const faReInfoNotes = BS + '/failuresRepair/showByUser'
 const getShowDevImg = CS + '/currency/showDeviceModel'  //2.4.1. 查询所有设备类型
+const showDeviceQueries = FS+ '/influxdb/showDeviceQueries'
 
 const BaseApi = {
   showDeviceAll: () => { //获取地图上显示点的数据
@@ -154,6 +156,14 @@ const BaseApi = {
   },
   getShowDevImg:(opts) =>{ //2.4.1. 查询所有设备类型  查找设备小图片
     return Axios.res('post', getShowDevImg,{});
+  },
+
+  showDeviceQueries:(opts) =>{ //4.1. 查询24小时采集数据曲线
+    return Axios.res('post', showDeviceQueries,{
+      'model': opts.model,
+      'dcode':opts.dcode,
+      'ucode':opts.ucode
+    });
   },
 
 

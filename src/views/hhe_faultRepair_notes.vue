@@ -95,6 +95,10 @@ export default {
         width: 100%;
         display: flex;
         .every{
+          &:hover{
+             flex:5;
+          }
+          transition:all .7s;
           flex:1;
           height:100px;
           border:1px dashed #ddd;

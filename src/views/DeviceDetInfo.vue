@@ -48,7 +48,7 @@
                 <li v-show='not_Show_Values' class="notpower wid60">
                    <img :src="$store.state.notpowe_url" />
                 </li>
-                <li @click='goEcharsvir("/hheDetchars",{"dcode":sItem.dcode})' v-show='item.dcode == sItem.dcode && !not_Show_Values' v-for='(sItem,Index) in S_V_Data'>
+                <li @click='goEcharsvir("/hheDetchars",{"dcode":sItem.dcode},sItem)' v-show='item.dcode == sItem.dcode && !not_Show_Values' v-for='(sItem,Index) in S_V_Data'>
                   <div class='sk_dev clearfix' v-for='(ssItem,index) in sItem.myKey'>
                     <span class='sk_devstate' v-for="child in ssItem">
                       {{child}}
@@ -94,6 +94,7 @@
 <script>
 import QRCode from 'qrcode'
 import Tool from '../utilities/Tool'
+import { Toast } from 'mint-ui';
 
 import {
   mapState,
@@ -120,6 +121,7 @@ export default {
       not_Show_Alarm:false,
       not_Show_Values:false,
       notMore:false,
+      pageSlide:0,
       fifterDcode:['th'],
     }
   },
@@ -148,14 +150,29 @@ export default {
     }),
     goEcharsDatavir(item){
        let setArr = this.fifterDcode;
-       if(setArr.indexOf(item.ucode) == 0){
+       if(setArr.indexOf(item.dcode) == 0){
           return true;
        }
     },
     goEcharsvir(type,query){
+      let _this = this;
       let setArr = this.fifterDcode;
+       if(query.dcode == 'th'){
+          let TH = _this.S_V_Data[_this.ucode+"_th"];
+          if(TH.h != undefined){
+              query.h = TH.h;
+          }
+          if(TH.t != undefined){
+              query.t = TH.t;
+          }
+          if(TH.h == undefined&&TH.t == undefined){
+            Toast('未采集到温湿度数据');
+            return;
+          }
+       }
+       query.ucode = _this.ucode;
        if(setArr.indexOf(query.dcode ) == 0){
-          this.handleGoto(type,query)
+           this.handleGoto(type,query)
        }
     },
     handleGoto(type,query) {
@@ -189,17 +206,20 @@ export default {
         if(res.data.result.length == 0){
             _this.sksj_nullimg = true;
         }
-        _this.$store.state.filterEcher = [];
+        let filterEcher = [];
         _this.D_D_Data = res.data.result;
         _this.D_D_Data.map(function(item,index){
+            console.log(_this.goEcharsDatavir(item));
             if(_this.goEcharsDatavir(item)){  
               let ar = {};
               ar.ucode = item.ucode;
               ar.dcode = item.dcode;
               ar.model = item.model;
-              _this.$store.state.filterEcher.push(ar)
+              filterEcher.push(ar)
+              console.log(filterEcher)
             }
         });
+        localStorage.setItem('filterEcher', JSON.stringify(filterEcher))
       }])
 
       _this.Get_Show_Alarm([{ 'ucode': _this.ucode }, function(res) {
@@ -238,6 +258,7 @@ export default {
             }
           }
           _this.S_V_Data = d;
+          console.log(_this.S_V_Data);
         }
       }])
     }
@@ -246,10 +267,16 @@ export default {
     let _this = this;
     _this.ucode = this.$route.query.ucode;
 
+    if(_this.$store.fromChars){
+       _this.pageSlide = 1;
+       _this.$store.fromChars = false;
+    }else{
+       _this.pageSlide = 0;
+    }
     let swiper = new Swiper('.swiper-container', {
       pagination: '.swiper-pagination',
       spaceBetween: 1,
-
+      initialSlide:_this.pageSlide,
       paginationClickable: true,
       paginationBulletRender: function(swiper, index, className) {
         let TabName = '';

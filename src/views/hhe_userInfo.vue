@@ -6,19 +6,19 @@
       </div>
     </div>
     <div class="InfoLine">
-      <div class="IL_title">账 号 :<span class="needs">*</span></div>
+      <div class="IL_title"><span class="needs">*</span> 账 号 :</div>
       <div class="IL_cen">
         <input maxlength="50" v-model='defaultInfo.username' @input="outfont" class="IL_input" placeholder="请输入账号">
       </div>
     </div>
     <div class="InfoLine">
-      <div class="IL_title">姓 名 :<span class="needs">*</span></div>
+      <div class="IL_title"><span class="needs">*</span> 姓 名 :</div>
       <div class="IL_cen">
         <input maxlength="10" v-model='defaultInfo.displayName' class="IL_input" placeholder="请输入名称">
       </div>
     </div>
     <div class="InfoLine">
-      <div class="IL_title">手机号 :<span class="needs">*</span></div>
+      <div class="IL_title"><span class="needs">*</span> 手机号 :</div>
       <div class="IL_cen">
         <input ref='val_lxdh' Tit='手机号码'  v-model='defaultInfo.phone' class="IL_input" placeholder="请输入手机号">
       </div>

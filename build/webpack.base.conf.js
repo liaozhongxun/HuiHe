@@ -39,7 +39,7 @@ module.exports = {
       'axios': path.resolve(__dirname, '../static/js/axios.min.js'),
       'jquery': path.resolve(__dirname, '../static/js/jquery.min.js'),
       'swiper': path.resolve(__dirname, '../static/js/swiper.min.js'),
-      //'axios': path.resolve(__dirname, '../../static/js/axios.min.js'),
+      'echarts': path.resolve(__dirname, '../static/js/echarts.min.js'),
     }
   },
   module: {
@@ -87,6 +87,7 @@ module.exports = {
      jQuery: "jquery",
      axios:'axios',
      Swiper:'swiper',
+     echarts:'echarts',
      Popper: ['popper.js', 'default'],
     })
   ],

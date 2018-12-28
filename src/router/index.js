@@ -19,9 +19,7 @@ const route = [
         components: {
           DeviceInfoViews: resolve => require(['@/views/MapShow'],resolve) //视图名:显示的组件
         },
-        meta: {
-          keepAlive: true // 需要被缓存
-        }
+        meta: {keepAlive: true}
       },
       {
         path: '/MapShow',
@@ -29,9 +27,7 @@ const route = [
         components: {
           DeviceInfoViews: resolve => require(['@/views/MapShow'],resolve)
         },
-        meta: {
-          keepAlive: true // 需要被缓存
-        }
+        meta: {keepAlive: true }
       },
       {
         path: '/ListShow',
@@ -39,30 +35,32 @@ const route = [
         components: {
           DeviceInfoViews: resolve => require(['@/views/ListShow'],resolve)
         },
-        meta: {
-          keepAlive: true // 需要被缓存
-        }
+        meta: {keepAlive: true }
       }
     ]
   },
   {
     path: '/DeviceInfo',
     name: 'DeviceInfo',
-    component: resolve => require(['@/views/DeviceInfo'],resolve)
+    meta: {keepAlive: false},
+    component: resolve => require(['@/views/DeviceInfo'],resolve),
   },
   {
     path: '/DeviceDetInfo',
     name: 'DeviceDetInfo',
-    component: resolve => require(['@/views/DeviceDetInfo'],resolve)
+    meta: {keepAlive: false},
+    component: resolve => require(['@/views/DeviceDetInfo'],resolve),
   },
   {
     path: '/AlarmSeting',
     name: 'AlarmSeting',
+    meta: {keepAlive: false},
     component: resolve => require(['@/views/AlarmSeting'],resolve)
   },
   {
     path: '/notTokenPage',
     name: 'notTokenPage',
+    meta: {keepAlive: false},
     component: resolve => require(['@/views/notTokenPage'],resolve)
   },
   {
@@ -70,38 +68,43 @@ const route = [
     component: resolve => require(['@/views/hhe_faultRepair'],resolve),
     children: [
       {
-	    path: '/',
-	    name: 'Upload',
-	    components: {
-	       UpLoadRouView: resolve => require(['@/views/Upload'],resolve) //视图名:显示的组件
-	    },
-	  },
+      path: '/',
+      name: 'Upload',
+      components: {
+         UpLoadRouView: resolve => require(['@/views/Upload'],resolve) //视图名:显示的组件
+      },
+    },
     ]
   },
    {
     path: '/hhe_faultRepair_notes',
     name: 'hhe_faultRepair_notes',
+    meta: {keepAlive: false},
     component: resolve => require(['@/views/hhe_faultRepair_notes'],resolve)
   },
   {
     path: '/hheUserInfo',
     name: 'hheUserInfo',
+    meta: {keepAlive: false},
     component: resolve => require(['@/views/hhe_userInfo'],resolve)
   },
   {
     path: '/hheAdminUserInfo',
     name: 'hheAdminUserInfo',
+    meta: {keepAlive: false},
     component: resolve => require(['@/views/hhe_adminUserInfo'],resolve)
   },
   {
     path: '/hheContactus',
     name: 'hheContactus',
+    meta: {keepAlive: false},
     component: resolve => require(['@/views/hhe_contactus'],resolve)
   },
   {
     path: '/hheDetchars',
     name: 'hheDetchars',
-    component: resolve => require(['@/views/hhe_detchars'],resolve)
+    meta: {keepAlive: false},
+    component: resolve => require(['@/views/hhe_detchars'],resolve),
   }
 ]
 const router = new Router({
@@ -121,8 +124,8 @@ const overallReset = {
    }
 }
 router.beforeEach((to, from, next) => {
-   //store.state.token = `eyJST0xFIjoicm9vdCIsImFsZyI6IkhTMjU2In0.eyJqdGkiOiJmZWI2YjU4ZS1lZDc5LTQ3NjctYmZjMC00Y2UzYmZlODc0YzYiLCJzdWIiOiIxMjM0NTYiLCJpYXQiOjE1NDU3ODQwODUsImV4cCI6MTU0NTc5ODQ4NX0.DkQOWuxmvJUEAdCpivSGaAokeedf4xqirqn68Yjs-k0`;
-   console.log(to)
+
+   let loginInfoJson = JSON.parse(window.localStorage.getItem("loginInfoJson"));
    switch (to.name) {  //设置标题
         case 'hheContactus': Tool.setTitle("联系我们"); break;
         case 'hheUserInfo': Tool.setTitle("用户信息"); break;
@@ -135,8 +138,8 @@ router.beforeEach((to, from, next) => {
     }
   if (!store.state.token) {
     if (window.localStorage.getItem("loginInfoJson")) {
-      store.state.token = JSON.parse(window.localStorage.getItem("loginInfoJson")).token;
-      store.state.expires = JSON.parse(window.localStorage.getItem("loginInfoJson")).expires;
+      store.state.token = loginInfoJson.token;
+      store.state.expires = loginInfoJson.expires;
     }
   }
 
@@ -147,9 +150,11 @@ router.beforeEach((to, from, next) => {
       Api.refresh().then(function(res) {
         store.state.token = res.data.result.token
         store.state.expires = res.data.result.expires
+        loginInfoJson.token = store.state.token; 
+        localStorage.setItem('loginInfoJson', JSON.stringify(loginInfoJson))
       })
       console.log(store.state.token)
-    }, 100000);
+    },600000);
 
 
     //localStorage.removeItem('DivShowImg');

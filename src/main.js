@@ -21,7 +21,12 @@ import '../static/css/swiper.min.css';
 //小分队UI
 import xfdUI from './components/index';
 //图片压缩
-import lrz from 'lrz';   
+import lrz from 'lrz';  
+
+// 引入echarts
+import echarts from 'echarts'
+
+Vue.prototype.$echarts = echarts  
 
 
 

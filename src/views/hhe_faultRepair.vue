@@ -7,7 +7,7 @@
       </div>
     </div>
     <div class="InfoLine">
-      <div class="IL_title">报修人姓名 :<span class="needs">*</span></div>
+      <div class="IL_title"><span class="needs">*</span> 报修人姓名 :</div>
       <div class="IL_cen">
         <div class="IL_input-group input-group">
           <span class="input-group-addon glyphicon glyphicon-user"></span>
@@ -16,7 +16,7 @@
       </div>
     </div>
     <div class="InfoLine">
-      <div class="IL_title">联系电话 :<span class="needs">*</span></div>
+      <div class="IL_title"><span class="needs">*</span> 联系电话 :</div>
       <div class="IL_cen">
         <div class="IL_input-group input-group">
           <span class="input-group-addon glyphicon glyphicon-earphone"></span>
@@ -25,7 +25,7 @@
       </div>
     </div>
     <div class="InfoLine">
-      <div class="IL_title">联系地址 :<span class="needs">*</span></div>
+      <div class="IL_title"><span class="needs">*</span> 联系地址 :</div>
       <div class="IL_cen">
         <div class="IL_input-group input-group">
           <span class="input-group-addon glyphicon glyphicon-map-marker"></span>
@@ -34,7 +34,7 @@
       </div>
     </div>
     <div class="InfoLine">
-      <div class="IL_title">设备号 :<span class="needs">*</span></div>
+      <div class="IL_title"><span class="needs">*</span> 设备号 :</div>
       <div class="IL_cen">
         <div class="IL_input-group input-group">
           <span class="input-group-addon glyphicon glyphicon-equalizer"></span>

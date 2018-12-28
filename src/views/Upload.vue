@@ -6,12 +6,12 @@
         <input ref='upfileinput' type="file" name="image" accept="image/*" @change='handleInputChange' multiple="multiple" />
      </div>
     <ul ref='Ul_imglist' class="Ul_imglist clearfix" v-show='imgUl'>
-        <li v-for="(item,key) in filesUrl">
-           <div class="li_cen" @click='ShowBigImg(key)' :style="{'background': 'url('+item+') center center no-repeat','background-size':'contain'}"></div>
+        <li v-for="(item,key,index) in filesUrl">
+           <div class="li_cen" @click='ShowBigImg(key,index)' :style="{'background': 'url('+item+') center center no-repeat','background-size':'contain'}"></div>
         </li>
-        <li class="Ul_first">
+<!--         <li class="Ul_first">
            <input ref='upfileinput' type="file" name="image" accept="image/*" @change='handleInputChange' multiple="multiple" />
-        </li>
+        </li> -->
     </ul>
     <div class="preWarp" v-show='precentShow'>
       <mt-progress :value="precent">
@@ -57,6 +57,7 @@ export default {
       precent:0,
       precentShow:false,
       probarShow:false,
+      pageSlide:0
 
     }
   },
@@ -189,7 +190,9 @@ export default {
         _this.$refs.upfileinput.value = '';
       }]);
     },
-    ShowBigImg(key){
+    ShowBigImg(key,index){
+      this.pageSlide = index;
+      this.createSwiper();
       this.bigImgShow = true;
     },
     ShowImgClose(){
@@ -209,16 +212,21 @@ export default {
         return true;
       }
       return false;
+    },
+    createSwiper(){
+      let _this = this;
+      var swiper = new Swiper('.swiper-container', {
+          paginationClickable: true,
+          centeredSlides: true,
+          initialSlide:_this.pageSlide,
+          autoplayDisableOnInteraction: false,
+          observer:true,//修改swiper自己或子元素时，自动初始化swiper 
+          observeParents:false,//修改swiper的父元素时，自动初始化swiper 
+      });
     }
   },
   mounted() {
-    var swiper = new Swiper('.swiper-container', {
-        paginationClickable: true,
-        centeredSlides: true,
-        autoplayDisableOnInteraction: false,
-        observer:true,//修改swiper自己或子元素时，自动初始化swiper 
-        observeParents:false,//修改swiper的父元素时，自动初始化swiper 
-    });
+    let _this = this;
     this.$store.state.updataUrls = {};
   },
 }

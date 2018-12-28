@@ -19,7 +19,7 @@ const state = {
  
    updataUrls:{}, //图片上传图片路径
 
-   filterEcher:[]
+   fromChars:false
 
 
 }

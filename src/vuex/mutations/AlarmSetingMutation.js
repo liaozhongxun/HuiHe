@@ -74,6 +74,11 @@ const DeviceDetInfoMutation = {
       })
     },
 
+    ['showDeviceQueries']({ commit, state }, params) { //24h 采集数据曲线
+      Api.showDeviceQueries(params[0]).then(function(res) {
+        params[1](res)
+      })
+    },
   },
   mutations: {
 

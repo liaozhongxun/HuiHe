@@ -9,7 +9,7 @@
         <div class="cen" :style="{'background': 'url('+headPhoto+') center center no-repeat','background-size':'contain'}"></div>
     </div>
     <div class="InfoLine">
-      <div class="IL_title">姓 名 :<span class="needs">*</span></div>
+      <div class="IL_title"><span class="needs">*</span> 姓 名 :</div>
       <div class="IL_cen">
         <input maxlength="10" v-model='defaultInfo.displayName' class="IL_input" placeholder="请输入名称">
       </div>
