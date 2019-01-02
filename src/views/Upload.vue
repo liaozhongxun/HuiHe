@@ -2,16 +2,18 @@
   <!--   https://segmentfault.com/a/1190000010034177 -->
   <div class="Upload">
      <div class="Ul_title">故障图片上传</div>
-     <div class="Ul_first">
+<!--      <div class="Ul_first">
         <input ref='upfileinput' type="file" name="image" accept="image/*" @change='handleInputChange' multiple="multiple" />
-     </div>
-    <ul ref='Ul_imglist' class="Ul_imglist clearfix" v-show='imgUl'>
+     </div> -->
+    <ul ref='Ul_imglist' class="Ul_imglist clearfix" >
         <li v-for="(item,key,index) in filesUrl">
            <div class="li_cen" @click='ShowBigImg(key,index)' :style="{'background': 'url('+item+') center center no-repeat','background-size':'contain'}"></div>
         </li>
-<!--         <li class="Ul_first">
-           <input ref='upfileinput' type="file" name="image" accept="image/*" @change='handleInputChange' multiple="multiple" />
-        </li> -->
+        <li>
+           <div class="Ul_first">
+              <input ref='upfileinput' type="file" name="image" accept="image/*" @change='handleInputChange' multiple="multiple" />
+           </div>
+        </li>
     </ul>
     <div class="preWarp" v-show='precentShow'>
       <mt-progress :value="precent">
@@ -53,18 +55,12 @@ export default {
       imgFile: {},
       filesUrl: {},
       bigImgShow:false,
-      imgUl:false,
       precent:0,
       precentShow:false,
       probarShow:false,
       pageSlide:0
 
     }
-  },
-  watch: {
-    // filesUrl(val) {
-    //   console.log('cccccccc')
-    // }
   },
   methods: {
     ...mapActions({
@@ -184,7 +180,6 @@ export default {
       }}, function(res) {
         _this.$set(_this.filesUrl, name, dataURL);
         _this.$set(_this.$store.state.updataUrls, name, res.data.result);
-        _this.imgUl = true;
         _this.precentShow = false;
         Toast('图片上传成功');
         _this.$refs.upfileinput.value = '';
@@ -202,7 +197,6 @@ export default {
       let _this = this;
       this.$delete(_this.filesUrl, key);
       this.$delete(_this.$store.state.updataUrls, key);
-      _this.imgUl = this.objIsNull();
       _this.bigImgShow = this.objIsNull();
 
       
@@ -245,9 +239,9 @@ export default {
     float: left;
     height: 120px;
     margin-bottom: 10px;
-              display: flex;
-        align-items: center;
-        justify-content: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     .li_cen{
        background-size: contain !important;
        width: 94%;
@@ -263,9 +257,9 @@ export default {
   }
 }
 .Ul_first{
-  width: 100px;
-  height: 100px;
-  border:2px dashed #999;
+  width: 94%;
+  height: 94%;
+  border:1px dashed #ccc;
   margin-left: 10px;
   background: url(/static/images/addimg.svg) center center no-repeat;
   input{
@@ -277,7 +271,7 @@ export default {
 .Upload{
   position: relative;
   background: #fff;
-  padding:10px 0;
+  padding:10px 0 0;
   margin-top: 10px;
   box-shadow: 0 1px 5px 0 rgba(0, 0, 0, 0.05);
   .Ul_title{

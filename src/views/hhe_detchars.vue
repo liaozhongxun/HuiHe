@@ -59,14 +59,14 @@ export default {
           axisLabel: {
             textStyle: {
               color: '#777', //坐标值得具体的颜色
-
+              padding: [8,0,0,0]
             }
           },
           data: [0, 1, 2, 3, 4, 5, 6]
         },
         grid: {
           left: '2%',
-          right: '2%',
+          right: '3%',
           bottom: '3%',
           containLabel: true
         },
@@ -76,7 +76,11 @@ export default {
           startValue: '',
           backgroundColor: "rgba(0,0,0,0.1)",
           borderColor: "#dedede",
-          bottom: 25,
+          bottom: 35,
+          textStyle: {
+            color: '#EAA25C',
+            fontWeight: '600'
+          },
 
           fillerColor: "rgba(0,255,255,0.3)", //选中范围的填充颜色。    
         }, {
@@ -105,11 +109,29 @@ export default {
         series: [{
             name: '温度',
             type: 'line',
+            symbolSize:6,  
+            itemStyle:{
+              normal:{
+                  lineStyle:{
+                      width:2,
+                      type:'solid'  //'dotted'虚线 'solid'实线
+                  }
+              }
+            },
             data: [1, 3, 9, 27, 81, -85]
           },
           {
             name: '湿度',
             type: 'line',
+            symbolSize:6,  
+            itemStyle:{
+              normal:{
+                  lineStyle:{
+                      width:2,
+                      type:'solid'  //'dotted'虚线 'solid'实线
+                  }
+              }
+            },
             data: [80, 2, 4, 8, 16, 32, 64, 88, 76]
           },
         ]
@@ -241,7 +263,7 @@ export default {
               dataH.map(function(item, i) {
                 let time1 = item[0].split(".")[0].split("T")[0].split("-");
                 let time2 = item[0].split(".")[0].split("T")[1].split(":");
-                dates.push(time1[1] + "-" + time1[2] + " " + time2[0] + ":" + time2[1])
+                dates.push(time1[1] + "-" + time1[2] +  "\n" + time2[0] + ":" + time2[1])
 
                 dataHV.push(item[3]);
               })
