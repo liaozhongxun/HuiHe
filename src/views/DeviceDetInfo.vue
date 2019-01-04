@@ -209,7 +209,6 @@ export default {
         let filterEcher = [];
         _this.D_D_Data = res.data.result;
         _this.D_D_Data.map(function(item,index){
-            console.log(_this.goEcharsDatavir(item));
             if(_this.goEcharsDatavir(item)){  
               let ar = {};
               ar.ucode = item.ucode;

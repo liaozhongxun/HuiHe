@@ -37,13 +37,14 @@ export default {
         },
         tooltip: {
           // trigger: 'item',
+          trigger: 'axis',
           enterable: true,
           triggerOn: 'click',
-          formatter: '{a} <br/>{b} : {c}'
+
         },
         legend: {
           left: 'right',
-          data: ['温度', '湿度']
+          data: ['温度℃', '湿度%']
         },
         xAxis: {
           type: 'category',
@@ -77,6 +78,8 @@ export default {
           backgroundColor: "rgba(0,0,0,0.1)",
           borderColor: "#dedede",
           bottom: 35,
+          handleWidth:30,
+          handleIcon: 'M10.7,11.9v-1.3H9.3v1.3c-4.9,0.3-8.8,4.4-8.8,9.4c0,5,3.9,9.1,8.8,9.4v1.3h1.3v-1.3c4.9-0.3,8.8-4.4,8.8-9.4C19.5,16.3,15.6,12.2,10.7,11.9z M13.3,24.4H6.7V23h6.6V24.4z M13.3,19.6H6.7v-1.4h6.6V19.6z',
           textStyle: {
             color: '#EAA25C',
             fontWeight: '600'
@@ -88,7 +91,7 @@ export default {
         }],
         yAxis: {
           min: -45,
-          max: 120,
+          max: 105,
           type: 'value',
           axisLine: {
             lineStyle: {
@@ -104,10 +107,10 @@ export default {
             }
           },
           type: '',
-          name: '度'
+          name: '℃/%'
         },
         series: [{
-            name: '温度',
+            name: '温度℃',
             type: 'line',
             symbolSize:6,  
             itemStyle:{
@@ -121,7 +124,7 @@ export default {
             data: [1, 3, 9, 27, 81, -85]
           },
           {
-            name: '湿度',
+            name: '湿度%',
             type: 'line',
             symbolSize:6,  
             itemStyle:{
@@ -166,7 +169,7 @@ export default {
             },
             axisLabel: { //文字样式（及“10”、“20”等文字样式）
               // color : "black",
-              distance: 6 //文字离表盘的距离
+              distance:3 //文字离表盘的距离
             },
             title: {
               // 其余属性默认使用全局文本样式，详见TEXTSTYLE
@@ -177,13 +180,17 @@ export default {
             name: '设备温度',
             type: 'gauge',
             detail: { //value样式
-              formatter: '{value}° ',
+              formatter: '{value}℃ ',
               fontSize: 15,
               marginTop: '30px'
             },
             data: [{
               value: 0,
-              name: ''
+              name: '温度',
+              symbolOffset:[20,20],
+              lable:{
+                fontSize:50
+              }
             }]
           },
           {
@@ -226,17 +233,17 @@ export default {
             name: '设备湿度',
             type: 'gauge',
             detail: { //value样式
-              formatter: '{value}° ',
+              formatter: '{value}% ',
               fontSize: 15,
             },
             data: [{
               value: 0,
-              label: {
+              name: '湿度',
+              dataLabel: {
                 textStyle: {
-                  fontSize: 5
+                  fontSize: 50
                 }
               },
-              name: ''
             }]
           },
         ]

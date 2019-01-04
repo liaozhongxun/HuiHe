@@ -1,11 +1,11 @@
 
 import xfdDialog from './dialog/index';
 import {Switch} from './switch';
-import {xfdPull,xfdPullLeft,xfdPullLeftTwo} from './pull';
+// import {xfdPull,xfdPullLeft,xfdPullLeftTwo} from './pull';
 
 const iview = {
     Switch,
-    xfdPullLeft
+    // xfdPullLeft
 }
 const install = function (Vue) {
 

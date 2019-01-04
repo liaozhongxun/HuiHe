@@ -12,7 +12,7 @@ import 'mint-ui/lib/style.min.css'
 //bootstrap
 import $ from 'jquery'
 import 'bootstrap/dist/css/bootstrap.min.css'
-import 'bootstrap/dist/js/bootstrap.min.js'
+// import 'bootstrap/dist/js/bootstrap.min.js'
 
 //swiper
 import Swiper from 'swiper';

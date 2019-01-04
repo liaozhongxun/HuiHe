@@ -124,7 +124,7 @@ const overallReset = {
    }
 }
 router.beforeEach((to, from, next) => {
-
+   console.log('router')
    let loginInfoJson = JSON.parse(window.localStorage.getItem("loginInfoJson"));
    switch (to.name) {  //设置标题
         case 'hheContactus': Tool.setTitle("联系我们"); break;
