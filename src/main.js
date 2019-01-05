@@ -26,6 +26,9 @@ import lrz from 'lrz';
 // 引入echarts
 import echarts from 'echarts'
 
+import VueDragResize from 'vue-drag-resize'
+Vue.component('vue-drag-resize', VueDragResize)
+
 Vue.prototype.$echarts = echarts  
 
 

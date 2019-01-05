@@ -60,6 +60,11 @@ const DeviceDetInfoMutation = {
          params[1](res)
       })
     },
+    ['sendByCode']({ commit, state }, params) { //5.1.1.  智能监控箱指令控制指令下发
+      Api.sendByCode(params[0]).then(function(res) {
+         params[1](res)
+      })
+    },
 
     ['getSetting']({ commit, state }, params) { //2.4.  获取微信配置信息
       Api.getSetting().then(function(res) {

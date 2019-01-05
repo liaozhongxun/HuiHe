@@ -1,4 +1,5 @@
 import Axios from './Ajax';
+import store from '../vuex/store/store'
 import xfdToast from '../components/dialog/index';
 
 const CS = window.applicationConfig.currencyServer;
@@ -6,6 +7,7 @@ const WMS = window.applicationConfig.wechatMpServer;
 const BS = window.applicationConfig.businessServer;
 const SCS = window.applicationConfig.securityServer;
 const FS = window.applicationConfig.influxdbServer;
+const PS = window.applicationConfig.udpProxyServer;
 
 const showDeviceAll = CS + '/currency/showDeviceAll'
 const showDeviceBy = CS + '/page/currency/showDeviceBy'
@@ -30,10 +32,14 @@ const adminUpdateUser = SCS + '/auth/admin/adminUpdateUser4Wechat'
 const faReInfoNotes = BS + '/failuresRepair/showByUser'
 const getShowDevImg = CS + '/currency/showDeviceModel'  //2.4.1. 查询所有设备类型
 const showDeviceQueries = FS+ '/influxdb/showDeviceQueries'
+const sendByCode = PS + '/sendByCode'
 
 const BaseApi = {
   showDeviceAll: () => { //获取地图上显示点的数据
-    xfdToast.loading.open()
+    if(store.state.oneload){
+       xfdToast.loading.open();
+       store.state.oneload = false;
+    }
     return Axios.res('post', showDeviceAll, {});
   },
 
@@ -162,6 +168,13 @@ const BaseApi = {
     return Axios.res('post', showDeviceQueries,{
       'model': opts.model,
       'dcode':opts.dcode,
+      'ucode':opts.ucode
+    });
+  },
+
+  sendByCode:(opts) =>{ //5.1.1.  智能监控箱指令控制指令下发
+    return Axios.res('post', sendByCode,{
+      'command':opts.command,
       'ucode':opts.ucode
     });
   },

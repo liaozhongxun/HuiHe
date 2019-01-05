@@ -2,7 +2,7 @@
   <div id="HeChats">
     <div class="HeChatsCen">
       <div class="THwarp">
-        <div class="chartit">设备{{ucode}}当前温湿度{{thematy}}</div>
+        <div class="chartit">{{dname}}({{ucode}})当前温湿度{{thematy}}</div>
         <div class="beforeTH">
           <div id="beThChart" :style="{width: '100%', height: '150px'}"></div>
         </div>
@@ -28,6 +28,7 @@ export default {
       thematy: '',
       thDatas: '',
       ucode: '',
+      dname:'',
       allDcode: '',
       ThOption: {
         title: {
@@ -44,7 +45,7 @@ export default {
         },
         legend: {
           left: 'right',
-          data: ['温度℃', '湿度%']
+          data: ['湿度%','温度℃']
         },
         xAxis: {
           type: 'category',
@@ -67,7 +68,7 @@ export default {
         },
         grid: {
           left: '2%',
-          right: '3%',
+          right: '5%',
           bottom: '3%',
           containLabel: true
         },
@@ -280,8 +281,8 @@ export default {
               console.log(dates);
 
               _this.ThOption.xAxis.data = dates;
-              _this.ThOption.series[0].data = dataHV;
-              _this.ThOption.series[1].data = dataTV;
+              _this.ThOption.series[0].data = dataTV;
+              _this.ThOption.series[1].data = dataHV;
               let ThChart = _this.$echarts.init(document.getElementById('ThChart'))
               ThChart.setOption(_this.ThOption, true);
               console.log(_this.ThOption.xAxis.data);
@@ -305,6 +306,7 @@ export default {
     }
 
     this.ucode = qury.ucode;
+    this.dname = qury.dname;
 
     if (qury.dcode == 'th') {
       _this.beThOption.series[0].data[0].value = qury.t;

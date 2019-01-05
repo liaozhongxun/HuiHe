@@ -105,6 +105,12 @@ const route = [
     name: 'hheDetchars',
     meta: {keepAlive: false},
     component: resolve => require(['@/views/hhe_detchars'],resolve),
+  },
+  {
+    path: '/suspenMenu',
+    name: 'suspenMenu',
+    meta: {keepAlive: false},
+    component: resolve => require(['@/views/suspenMenu'],resolve),
   }
 ]
 const router = new Router({
@@ -124,17 +130,17 @@ const overallReset = {
    }
 }
 router.beforeEach((to, from, next) => {
-   console.log('router')
    let loginInfoJson = JSON.parse(window.localStorage.getItem("loginInfoJson"));
    switch (to.name) {  //设置标题
         case 'hheContactus': Tool.setTitle("联系我们"); break;
         case 'hheUserInfo': Tool.setTitle("用户信息"); break;
+        case 'hheAdminUserInfo': Tool.setTitle("用户信息"); break;
         case 'Upload': Tool.setTitle("故障报修"); break;
         case 'hhe_faultRepair_notes': Tool.setTitle("报修记录"); break;
         case 'notTokenPage': Tool.setTitle("访问错误"); break;
         case 'AlarmSeting': Tool.setTitle("告警配置"); break;
         case 'DeviceDetInfo': Tool.setTitle("设备信息详情"); break;
-        default:Tool.setTitle("辉和智能科技云平台"); break;
+        default:Tool.setTitle("智能科技云平台"); break;
     }
   if (!store.state.token) {
     if (window.localStorage.getItem("loginInfoJson")) {
@@ -154,7 +160,7 @@ router.beforeEach((to, from, next) => {
         localStorage.setItem('loginInfoJson', JSON.stringify(loginInfoJson))
       })
       console.log(store.state.token)
-    },600000);
+    },60000);
 
 
     //localStorage.removeItem('DivShowImg');

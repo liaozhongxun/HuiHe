@@ -18,6 +18,7 @@ const state = {
    notpowe_url:'./static/images/notpower.png', //没权限图标
  
    updataUrls:{}, //图片上传图片路径
+   oneload:true,
 
    fromChars:false
 
