@@ -1,45 +1,15 @@
 /*-工具类-*/
 export default class Tool {
   constructor() {}
-
-  static listItem(item) { //地图海量点标记数据配置
-    return { 
-        lnglat: [item.lng, item.lat], 
-        name: item.name,
-        // d_name: dname[0], 
-        // d_code: dname[1], 
-        dname:this.devSplit(item.dname),
-        id: item.id, 
-        conn: item.connstate, 
-        style: this.setStyle(item.connstate),
-        type: item.type 
-    }
+  
+  //动态ico
+  static createTitleIco(url){
+    var link = document.querySelector("link[rel*='icon']") || document.createElement('link');
+    link.type = 'image/x-icon';
+    link.rel = 'shortcut icon';
+    link.href = url;
+    document.getElementsByTagName('head')[0].appendChild(link);
   }
-  static setStyle(conn) {
-    switch (conn) {
-      case '在线':
-        return 0;
-        break;
-      case '离线':
-        return 1;
-        break;
-      case '告警':
-        return 2;
-        break;
-      case '异常':
-        return 3;
-        break;
-    }
-  }
-  static devSplit(name){
-    let dname = name.split(",");
-    let dname_arr = []; 
-    for(let i in dname){
-        dname_arr.push(dname[i].split("_"));
-    }
-    return dname_arr;
-  }
-
   //时间转换
   static dateFormat(val){
       let value = new Date(val);

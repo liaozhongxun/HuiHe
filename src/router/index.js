@@ -141,7 +141,16 @@ router.beforeEach((to, from, next) => {
         case 'AlarmSeting': Tool.setTitle("告警配置"); break;
         case 'DeviceDetInfo': Tool.setTitle("设备信息详情"); break;
         default:Tool.setTitle("智能科技云平台"); break;
-    }
+  }
+  
+  if(window.org == 'tongbai'){
+    Tool.createTitleIco('./static/images/TB/favicon.ico')
+  }else if(window.org == 'weixin'){
+    Tool.createTitleIco('./static/images/HH/favicon.ico')
+  }else{
+    Tool.createTitleIco('./static/images/HH/favicon.ico')
+  }
+
   if (!store.state.token) {
     if (window.localStorage.getItem("loginInfoJson")) {
       store.state.token = loginInfoJson.token;

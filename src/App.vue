@@ -27,6 +27,17 @@ export default {
       return {
         transitionName: 'slide-left'
       }
+  },
+  mounted(){
+    // $("#app").css('-webkit-overflow-scrolling','auto');
+    // $("#app").scrollTop(9999);
+    // $("#app").css('-webkit-overflow-scrolling','touch');
+    $("html").css('-webkit-overflow-scrolling','auto');
+    $("html").scrollTop(9999);
+    $("html").css('-webkit-overflow-scrolling','touch');
+    $("body").css('-webkit-overflow-scrolling','auto');
+    $("body").scrollTop(9999);
+    $("body").css('-webkit-overflow-scrolling','touch');
   }
 }
 </script>
@@ -35,11 +46,14 @@ export default {
   html,body{
     width: 100%;
     height: 100%;
+    overflow-y:scroll;
+    -webkit-overflow-scrolling:touch;
   }
   #app{
     width: 100%;
     height: 100%; 
-    text-align: none !important;
+    overflow-y:scroll;
+    -webkit-overflow-scrolling:touch;
   }
   .child-view {
     position: absolute;

@@ -59,27 +59,22 @@ const DevInfoMutations = {
     },
     [DevinfoTypes.ADDMARKERS](state, data) { //添加点标记
       let _this = this;
-      let style = [{
-          url: './static/images/Online.png',
-          size: new AMap.Size(22, 28),
-          anchor: new AMap.Pixel(13, 8)
-        },
-        {
-          url: './static/images/Offline.png',
-          size: new AMap.Size(22, 28),
-          anchor: new AMap.Pixel(13, 8)
-        },
-        {
-          url: './static/images/Warning.png', // 图标地址
-          size: new AMap.Size(22, 28),
-          anchor: new AMap.Pixel(13, 8)
-        },
-        {
-          url: './static/images/Errey.png',
-          size: new AMap.Size(22, 28),
-          anchor: new AMap.Pixel(13, 8)
-        }
-      ];
+      let icoPath = ['Online.png','Offline.png','Warning.png','Errey.png']
+      let style = [];
+      for(let i=0;i<icoPath.length;i++){
+        let Size = new AMap.Size(22, 28);
+        let Url = './static/images/HH/'+icoPath[i];
+      
+        if(window.org == 'tongbai'){
+            Size = new AMap.Size(22, 22);
+            Url = './static/images/TB/'+icoPath[i];
+        };
+        style.push({
+            url:Url,
+            size: Size,
+            anchor: new AMap.Pixel(13, 8)
+        })
+      }
 
       state.massMarks = new AMap.MassMarks(state.mapDatas, {
         opacity: 1,
