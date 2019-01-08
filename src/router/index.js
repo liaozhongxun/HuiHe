@@ -122,8 +122,8 @@ const overallReset = {
    getUserImg:()=>{ 
     Api.getShowDevImg().then(function(res) {
       if(res.data.status == 0){
-           localStorage.setItem('DivShowImg', JSON.stringify(res.data.result))
-           console.log('第一次')
+           // localStorage.setItem('DivShowImg', JSON.stringify(res.data.result))
+           //console.log('第一次')
            store.state.DevImg_data = res.data.result;
       }
     })
@@ -173,11 +173,11 @@ router.beforeEach((to, from, next) => {
 
 
     //localStorage.removeItem('DivShowImg');
-    if(JSON.parse(localStorage.getItem('DivShowImg')) == null){
+    //if(JSON.parse(localStorage.getItem('DivShowImg')) == null){
        overallReset.getUserImg()
-    }else{
-      store.state.DevImg_data = JSON.parse(localStorage.getItem('DivShowImg'));
-    }
+    // }else{
+    //   store.state.DevImg_data = JSON.parse(localStorage.getItem('DivShowImg'));
+    // }
 
     next();
   } else {

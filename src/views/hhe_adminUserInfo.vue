@@ -106,7 +106,7 @@ export default {
   },
   mounted() {
      let _this = this;
-     // localStorage.setItem('key',608);
+     localStorage.setItem('keycode',602);
      let keyId = JSON.parse(window.localStorage.getItem("keycode")); 
      if(keyId){
        _this.idGetUserInfo([{'id':keyId},function(res){
