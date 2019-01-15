@@ -83,9 +83,9 @@ export default {
 
           let vs1 = _this.myValidata(/^1(3|4|5|7|8)\d{9}$/,"val_lxdh");
           let vs2 = _this.myValidata(/^[a-z0-9]+([._\\-]*[a-z0-9])*@([a-z0-9]+[-a-z0-9]*[a-z0-9]+.){1,63}[a-z0-9]+$/,'val_yx');
-          if(!vs1&&this.defaultInfo.phone!=''){
+          if(!vs1&&this.defaultInfo.phone){
             Toast('手机格式不正确')
-          }else if(!vs2&&this.defaultInfo.email!=''){
+          }else if(!vs2&&this.defaultInfo.email){
             Toast('邮箱格式不正确')
           }else{
               // if(Tool.objectKeyIsEmpty(_this.defaultInfo,'id')){
@@ -106,7 +106,7 @@ export default {
   },
   mounted() {
      let _this = this;
-     localStorage.setItem('keycode',602);
+     // localStorage.setItem('keycode',602);
      let keyId = JSON.parse(window.localStorage.getItem("keycode")); 
      if(keyId){
        _this.idGetUserInfo([{'id':keyId},function(res){

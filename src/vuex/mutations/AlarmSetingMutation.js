@@ -60,6 +60,7 @@ const DeviceDetInfoMutation = {
          params[1](res)
       })
     },
+    
     ['sendByCode']({ commit, state }, params) { //5.1.1.  智能监控箱指令控制指令下发
       Api.sendByCode(params[0]).then(function(res) {
          params[1](res)
@@ -71,7 +72,6 @@ const DeviceDetInfoMutation = {
         params(res)
       })
     },
-
 
     ['imgUpload']({ commit, state }, params) { //图片上传
       Api.imgUpload(params[0]).then(function(res) {

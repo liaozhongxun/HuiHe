@@ -244,7 +244,8 @@ export default {
       Get_Expire_Info: 'GET_EXPIRE_INFO',
       Get_Show_Alarm: 'GET_SHOW_ALARM',
       Get_Show_Values: 'GET_SHOW_VALUES',
-      sendByCode:'sendByCode'
+      sendByCode:'sendByCode',
+      showAttrByModel:'showAttrByModel'
     }),
     goEcharsDatavir(item){
        let setArr = this.fifterDcode;
@@ -373,6 +374,9 @@ export default {
         if(res.data.status != 0){
           _this.not_Show_Values = true;
         }else{
+          _this.showAttrByModel([{ 'ucode': _this.ucode }, function(res) {
+                console.log(res);
+          }])
           _this.S_V_Data = res.data.result;
           let d = _this.S_V_Data;
           for (let i in d) {
@@ -405,8 +409,6 @@ export default {
             _this.set_door=_this.S_V_Data[_this.ucode+"_door"].s == 'ok';
             _this.set_fan=_this.S_V_Data[_this.ucode+"_fan"].s == 'on';
           }
-          console.log(_this.set_o1)
-          console.log(_this.S_V_Data);
         }
       }])
     },
@@ -523,190 +525,6 @@ export default {
             }
           ]
       });
-      // this.$xfdDialog.confirm({
-      //     title: '',
-      //     mes: `<div class="aaa"><span style="font-size:17px">确定${val.name}吗?</span></div>`,
-      //     opts: [{
-      //         txt: '取消',
-      //         color: false,
-      //         callback: () => {
-
-      //         }
-      //       },
-      //       {
-      //         txt: '确定',
-      //         color: true,
-      //         callback: () => {
-      //           switch(state){
-      //             case 'o_1':
-      //                 if(_this.set_o1 && rs == undefined){
-      //                     _this.sendByCode([{"ucode":_ucode,"command":'o_1_off'},function(res){
-      //                       if(res.data.code == 0){
-      //                           _this.set_o1 = false;
-      //                       }else{
-      //                           Toast(res.data.message)
-      //                       }
-      //                     }])
-      //                 }else if(rs == undefined){
-      //                     _this.sendByCode([{"ucode":_ucode,"command":'o_1_on'},function(res){
-      //                       if(res.data.code == 0){
-      //                           _this.set_o1 = true;
-      //                       }else{
-      //                           Toast(res.data.message)
-      //                       }
-      //                     }])
-      //                 }
-      //                 if(rs == 'rst'){
-      //                    _this.sendByCode([{"ucode":_ucode,"command":'o_1_rst'},function(res){
-      //                       Toast(res.data.message)
-      //                     }])
-      //                 }
-      //             break;
-      //             case 'o_2':
-      //                 if(_this.set_o2 && rs == undefined){
-      //                     _this.sendByCode([{"ucode":_ucode,"command":'o_2_off'},function(res){
-      //                       if(res.data.code == 0){
-      //                           _this.set_o2 = false;
-      //                       }else{
-      //                           Toast(res.data.message)
-      //                       }
-      //                     }])
-      //                 }else if(rs == undefined){
-      //                     _this.sendByCode([{"ucode":_ucode,"command":'o_2_on'},function(res){
-      //                       if(res.data.code == 0){
-      //                           _this.set_o2 = true;
-      //                       }else{
-      //                           Toast(res.data.message)
-      //                       }
-      //                     }])
-      //                 }
-      //                 if(rs == 'rst'){
-      //                    _this.sendByCode([{"ucode":_ucode,"command":'o_2_rst'},function(res){
-      //                       Toast(res.data.message)
-      //                     }])
-      //                 }
-      //             break;
-      //             case 'o_3':
-      //                 console.log(rs);
-      //                 if(_this.set_o3 && rs == undefined){
-      //                     _this.sendByCode([{"ucode":_ucode,"command":'o_3_off'},function(res){
-      //                       if(res.data.code == 0){
-      //                           _this.set_o3 = false;
-      //                       }else{
-      //                           Toast(res.data.message)
-      //                       }
-      //                     }])
-      //                 }else if(rs == undefined){
-      //                     _this.sendByCode([{"ucode":_ucode,"command":'o_3_on'},function(res){
-      //                       if(res.data.code == 0){
-      //                           _this.set_o3 = true;
-      //                       }else{
-      //                           Toast(res.data.message)
-      //                       }
-      //                     }])
-      //                 }
-      //                 if(rs == 'rst'){
-      //                    _this.sendByCode([{"ucode":_ucode,"command":'o_3_rst'},function(res){
-      //                       Toast(res.data.message)
-      //                     }])
-      //                 }
-      //             break;
-      //             case 'o_4':
-      //                 console.log(rs);
-      //                 if(_this.set_o4 && rs == undefined){
-      //                     _this.sendByCode([{"ucode":_ucode,"command":'o_4_off'},function(res){
-      //                       if(res.data.code == 0){
-      //                           _this.set_o4 = false;
-      //                       }else{
-      //                           Toast(res.data.message)
-      //                       }
-      //                     }])
-      //                 }else if(rs == undefined){
-      //                     _this.sendByCode([{"ucode":_ucode,"command":'o_4_on'},function(res){
-      //                       if(res.data.code == 0){
-      //                           _this.set_o4 = true;
-      //                       }else{
-      //                           Toast(res.data.message)
-      //                       }
-      //                     }])
-      //                 }
-      //                 if(rs == 'rst'){
-      //                    _this.sendByCode([{"ucode":_ucode,"command":'o_4_rst'},function(res){
-      //                       Toast(res.data.message)
-      //                     }])
-      //                 }
-      //             break;
-      //             case 'o_5':
-      //                 if(_this.set_o5 && rs == undefined){
-      //                     _this.sendByCode([{"ucode":_ucode,"command":'o_5_off'},function(res){
-      //                       if(res.data.code == 0){
-      //                           _this.set_o5 = false;
-      //                       }else{
-      //                           Toast(res.data.message)
-      //                       }
-      //                     }])
-      //                 }else if(rs == undefined){
-      //                     _this.sendByCode([{"ucode":_ucode,"command":'o_5_on'},function(res){
-      //                       if(res.data.code == 0){
-      //                           _this.set_o5 = true;
-      //                       }else{
-      //                           Toast(res.data.message)
-      //                       }
-      //                     }])
-      //                 }
-      //                 if(rs == 'rst'){
-      //                    // let inter;
-      //                    // clearInterval('inter');
-      //                    _this.sendByCode([{"ucode":_ucode,"command":'o_5_rst'},function(res){
-      //                       Toast(res.data.message)
-      //                     }])
-      //                 }
-      //             break;
-      //             case 'fan':
-            
-      //                 if(rs != 'fan_3'){
-      //                   if(_this.set_fan){
-      //                       _this.sendByCode([{"ucode":_ucode,"command":'fan_4'},function(res){
-      //                         if(res.data.code == 0){
-      //                             _this.set_fan = false;
-                        
-      //                         }else{
-      //                             Toast(res.data.message)
-      //                         }
-      //                       }])
-      //                   }else{
-      //                       _this.sendByCode([{"ucode":_ucode,"command":'fan_5'},function(res){
-      //                         if(res.data.code == 0){
-      //                             _this.set_fan = true;
-                     
-      //                         }else{
-      //                             Toast(res.data.message)
-      //                         }
-      //                       }])
-      //                   }
-      //                 }else{
-      //                   _this.sendByCode([{"ucode":_ucode,"command":'fan_3'},function(res){
-      //                       Toast(res.data.message)
-      //                   }])
-      //                 }
-      //             break;
-      //             case 'door':
-      //                 // if(！_this.set_door){
-      //                     _this.sendByCode([{"ucode":_ucode,"command":'lock'},function(res){
-      //                       if(res.data.code == 0){
-      //                           // _this.set_fan = false;
-      //                           Toast("开锁成功")
-      //                       }else{
-      //                           Toast(res.data.message)
-      //                       }
-      //                     }])
-      //                 // }
-      //             break;
-      //           }
-      //         }
-      //       }
-      //     ]
-      //   });
     },
     resize(newRect) {
       this.width = newRect.width;

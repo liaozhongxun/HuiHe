@@ -2,7 +2,7 @@
   <div id="HeChats">
     <div class="HeChatsCen">
       <div class="THwarp">
-        <div class="chartit">{{dname}}({{ucode}})当前温湿度{{thematy}}</div>
+        <div class="chartit">{{dname}}({{ucode}})最后采集温湿度{{thematy}}</div>
         <div class="beforeTH">
           <div id="beThChart" :style="{width: '100%', height: '150px'}"></div>
         </div>

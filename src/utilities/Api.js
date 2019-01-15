@@ -33,6 +33,7 @@ const faReInfoNotes = BS + '/failuresRepair/showByUser'
 const getShowDevImg = CS + '/currency/showDeviceModel'  //2.4.1. 查询所有设备类型
 const showDeviceQueries = FS+ '/influxdb/showDeviceQueries'
 const sendByCode = PS + '/sendByCode'
+const showAttrByModel = CS +'/currency/showAttrByModel' //2.3.4. 根据类型获取解析参数
 
 const BaseApi = {
   showDeviceAll: () => { //获取地图上显示点的数据
@@ -175,6 +176,11 @@ const BaseApi = {
   sendByCode:(opts) =>{ //5.1.1.  智能监控箱指令控制指令下发
     return Axios.res('post', sendByCode,{
       'command':opts.command,
+      'ucode':opts.ucode
+    });
+  },
+  showAttrByModel:(opts) =>{ //2.3.4. 根据类型获取解析参数
+    return Axios.res('post', showAttrByModel,{
       'ucode':opts.ucode
     });
   },

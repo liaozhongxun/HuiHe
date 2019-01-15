@@ -33,6 +33,12 @@ const DeviceDetInfoMutation = {
         params[1](res)
       })
     },
+
+    ['showAttrByModel']({ commit, state }, params) { //2.3.4. 根据类型获取解析参数
+      Api.showAttrByModel(params[0]).then(function(res) {
+        params[1](res);
+      })
+    },
   },
   mutations: {
 
